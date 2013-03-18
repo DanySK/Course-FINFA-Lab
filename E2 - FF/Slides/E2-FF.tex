@@ -186,7 +186,7 @@ Le funzioni possono, al loro interno, chiamare altre funzioni o sé stesse. Si a
  \item Che tipo di comportamento realizza?
  \item Per quali input funziona come dovrebbe?
  \item Come si potrebbe migliorare, per far sì che funzioni correttamente per un insieme di input più ampio?
-%  \item La funzione effettua una ricorsione tail o non tail? Perché?
+  \item La funzione effettua una ricorsione tail o non tail? Perché?
  \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(3)}.
 \end{itemize}
 \end{frame}
@@ -208,7 +208,7 @@ int f(int x, int y, int z, int w) {
 \begin{itemize}
  \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(3,7)}.
  \item Che tipo di comportamento realizza? Si cerchi di intuirlo, in caso di difficoltà si usi il framework per ottenere dei suggerimenti.
-%  \item La funzione effettua una ricorsione tail o non tail? Perché?
+  \item La funzione effettua una ricorsione tail o non tail? Perché?
 \end{itemize}
 \end{frame}
 
@@ -284,6 +284,32 @@ Si mostri al docente l'esercizio completato per ricevere commenti.
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti: riconoscitori EBNF}
+\begin{itemize}
+ \item  \texttt{ric123(int[])} che riconosce la grammatica 1\{2\textbar{}3\}. Come esempio, si consideri il riconoscitore per 1\{2\} visto a lezione. Si scriva un test per verificarne il comportamento.
+\end{itemize}
+\begin{itemize}
+ \item  Considerando il riconoscitore per la grammatica \{2\}1 sotto riportato, si realizzi \texttt{ric1234(int[])} che riconosce la grammatica \{1\textbar{}2\}34. Si scriva un test.
+\end{itemize}
+\scriptsize
+\begin{verbatim}
+boolean ric21(int[] a) {
+   return ric2(a, 0);
+}
+boolean ric2(int[] a, int pos) {
+   return pos == a.length ? false :
+      a[pos] != 2 ? ric1(a, pos) : 
+      ric2(a, pos + 1);
+}
+boolean ric1(int[] a, int pos) {
+   return a[pos] == 1 && a.length == pos + 1;
+}
+\end{verbatim}
+\normalsize
+Si mostri al docente l'esercizio completato per ricevere commenti.
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Esercizi aggiuntivi}
 Da questo punto, vengono proposti esercizi aggiuntivi. Sono consigliati per coloro che hanno completato \textbf{tutti} i precedenti con successo e desiderano esercitarsi ulteriormente.
 \end{frame}
@@ -337,12 +363,12 @@ Si mostri al docente l'esercizio completato per ricevere commenti.
 \frametitle{Progettare nuove funzioni: riconoscitori EBNF}
 Si progettino le seguenti funzioni, e per ognuna si scriva un test appropriato che ne verifichi il funzionamento.
 \begin{itemize}
- \item \texttt{ric21(int[])} che riconosce la grammatica \{2\}1. Come esempio, si consideri il riconoscitore per 1\{2\} visto a lezione.
  \item \texttt{ric111(int[])}, riconoscitore per la grammatica 1\{1\}1.
  \item \texttt{ric12(int[])}, riconoscitore per la grammatica \{1\textbar{}2\}.
- \item \texttt{ric123(int[])}, riconoscitore per la grammatica 1\{2\}3.
+ \item \texttt{ric122(int[])}, riconoscitore per la grammatica 1\{2\}3.
  \item \texttt{ric1234(int[])}, riconoscitore per la grammatica \{1\textbar{}2\}\{3\textbar{}4\}.
 \end{itemize}
+Si mostri al docente l'esercizio completato per ricevere commenti.
 \end{frame}
 
 % \begin{frame}[fragile]

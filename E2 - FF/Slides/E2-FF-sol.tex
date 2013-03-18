@@ -134,6 +134,54 @@ boolean test_sum_abs() {
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti: riconoscitori EBNF}
+\begin{verbatim}
+boolean ric123(int[] a) {
+   return a.length > 0 && a[0] == 1 && ric23(a, 1);
+}
+boolean ric23(int[] a, int pos) {
+   return pos == a.length ||
+      ((a[pos] == 2 || a[pos] ==3 ) ? ric23(a, pos + 1) :
+      false);
+}
+boolean test_ric123(){
+   return ric123(new int[]{1}) &&
+      ric123(new int[]{1,2}) &&
+      ric123(new int[]{1,2,3}) &&
+      ric123(new int[]{1,3,3,2,3,2}) &&
+      !ric123(new int[]{}) &&
+      !ric123(new int[]{1,2,3,4});
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti: riconoscitori EBNF}
+\scriptsize
+\begin{verbatim}
+boolean ric1234(int[] a) {
+   return ric12(a, 0);
+}
+boolean ric12(int[] a, int pos) {
+   return pos == a.length ? false :
+      (a[pos] == 2 || a[pos] == 1)? ric12(a, pos + 1) : 
+      ric34(a, pos);
+}
+boolean ric34(int[] a, int pos) {
+   return pos + 2 == a.length && a[pos] == 3 && a[pos+1] == 4;
+}
+boolean test_ric1234(){
+   return ric1234(new int[]{3,4}) &&
+      ric1234(new int[]{1,2,3,4}) &&
+      ric1234(new int[]{1,2,2,2,1,3,4}) &&
+      !ric1234(new int[]{}) &&
+      !ric1234(new int[]{1,2,3,4,1}) &&
+      !ric1234(new int[]{1,2,3,4,2});
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Esercizi aggiuntivi}
 Da questo punto, vengono proposti esercizi aggiuntivi. Sono consigliati per coloro che hanno completato \textbf{tutti} i precedenti con successo e desiderano esercitarsi ulteriormente.
 \end{frame}
@@ -218,25 +266,6 @@ boolean test_arrayEquals() {
 \begin{frame}[fragile]
 \frametitle{Progettare nuove funzioni: riconoscitori EBNF}
 \begin{verbatim}
-boolean ric21(int[] a) {
-   return ric2(a, 0);
-}
-
-boolean ric2(int[] a, int pos) {
-   return pos == a.length ? false :
-      a[pos] != 2 ? ric1(a, pos) : 
-      ric2(a, pos + 1);
-}
-
-boolean ric1(int[] a, int pos) {
-   return a[pos] == 1 && a.length == pos + 1;
-}
-\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
-\begin{verbatim}
 /* Note that 1{1}1 = 11{1} */
 boolean ric111(int[] a) {
    return a.length > 1 && a[0] == 1 && a[1] == 1 ?
@@ -271,8 +300,8 @@ boolean ric123(int[] a) {
    return a.length > 1 && a[0] == 1 && ric23(a, 1);
 }
 boolean ric23(int[] a, int pos) {
-   return pos == a.length ? false : a[pos] == 2 ? ric23(a, pos + 1) :
-      ric3(a, pos);
+   return pos == a.length ? false : a[pos] == 2 ?
+      ric23(a, pos + 1) : ric3(a, pos);
 }
 boolean ric3(int[] a, int pos) {
    return pos == a.length -1 && a[pos] == 3;
