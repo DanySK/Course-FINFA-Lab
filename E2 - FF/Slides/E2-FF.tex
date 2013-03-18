@@ -1,0 +1,375 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 2 \\ Funzioni e ricorsione}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e2}
+ \item Scaricare l'esercitazione odierna
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verifica del funzionamento del Framework F-F}
+\begin{itemize}
+ \item Sul desktop, troverete la cartella ``framework''
+ \item Fate doppio click sulla cartella
+ \item Si aprirà una nuova finestra, all'interno della quale troverete tre software
+ \item Fare doppio click sull'icona del FrameworkFF
+ \item Inserire nel campo ``Espressioni da valutare'' il testo \texttt{$1+2$}
+ \item Premere il tasto ``Valutazione''
+ \item Verificare che il risultato sia ``3''
+ \item In caso di risultato diverso dalle attese, chiamare subito il docente o il tutor
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Come comportarsi di fronte agli errori}
+\begin{itemize}
+ \item Errare humanum est
+  \begin{itemize}
+    \item Ed è anche molto meglio sbagliare in laboratorio che all'esame!
+  \end{itemize}
+ \item È importante, di fronte agli errori, non scoraggiarsi, leggere \textbf{attentamente} il messaggio di errore, \textbf{capirlo} e studiare una contromisura.
+ \item Java segnala gli errori in maniera piuttosto precisa...
+ \item ...il framework, che ne usa una sottoparte molto ristretta, molto meno!
+ \item In caso di errore, il framework vi mostrerà un messaggio che spiega cosa (il compilatore pensa che) sia successo, seguito dal codice Java reale che è stato invocato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Come esercitarsi con il Framework}
+\begin{itemize}
+ \item Questo framework è una versione potenziata di FV
+ \item Oltre a consentire di valutare espressioni, consente di definire funzioni
+ \item Le funzioni definite potranno poi essere utilizzate all'interno dell'espressione da valutare
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Struttura di una funzione}
+Partiamo da un semplice esempio:\\ \texttt{int s(int i)\{ return i+1;\}}
+\begin{itemize}
+ \item \texttt{int s(int i)} è detta ``signature''
+  \begin{itemize}
+    \item \texttt{La signature dà tutte le informazioni necessarie all'identificazione di una funzione:}
+  \begin{itemize}
+    \item nome della funzione
+    \item numero e tipo dei parametri di ingresso
+    \item tipo del parametro di ritorno
+  \end{itemize}
+  \item Conoscendo la signature di una funzione, è possibile utilizzarla!
+  \end{itemize}
+ \item \texttt{return i+1} è detto ``corpo''
+  \begin{itemize}
+    \item Il corpo contiene l'effettiva implementazione
+    \item Nel corpo si trovano le istruzioni che vengono effettivamente svolte quando si invoca la funzione
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Invocazione delle funzioni}
+\begin{itemize}
+ \item Si inserisca la funzione \texttt{int s(int i)} della slide precedente nel box in alto
+ \item Senza inserire nulla nel secondo box, si valuti. Perché questo risultato?
+ \item Si provi ad intuire, e quindi si verifichi, il risultato della valutazione delle seguenti:
+\begin{itemize}
+ \item \texttt{s(0)}
+ \item \texttt{s(10)}
+ \item \texttt{s(2147483647)} --- Perché?
+ \item \texttt{s(0)+s(0)}
+ \item \texttt{s(s(0))}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Correttezza semantica, singola funzione}
+Una funzione è semanticamente corretta se:
+\begin{itemize}
+ \item I parametri sono usati in maniera compatibile con il loro tipo
+ \item Il tipo dell'espressione corpo è uguale, oppure convertibile per coercizione, al tipo di ritorno della funzione
+ \item Si provi ad intuire, e quindi si verifichi, quali delle seguenti funzioni sono semanticamente corrette. Ove presenti, si leggano e si capiscano i messaggi di errore.
+\begin{itemize}
+ \item \texttt{int f(int x, int y)\{ return x+y;\}}
+ \item \texttt{int f(double x, int y)\{ return x+y;\}}
+ \item \texttt{float f(double x, int y)\{ return x+y;\}}
+ \item \texttt{int f(int x, int y)\{ return x+\textquotedbl{}y\textquotedbl{};\}}
+ \item \texttt{double f(double x, long y)\{ return x+y;\}}
+ \item \texttt{int f(boolean b, boolean b2)\{return (b\&{}b2)?0:1f;\}}
+ \item \texttt{int f(boolean b, boolean b2)\{return (b\&{}b2)?-1:1;\}}
+ \item \texttt{boolean f(int x, int y)\{ return x==y;\}}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Correttezza dell'invocazione}
+Una funzione è correttamente invocata se:
+\begin{itemize}
+ \item I parametri passati sono uguali (o convertibili per coercizione) al tipo dichiarato
+ \item Il tipo di ritorno è uguale (o convertibile per coercizione) al tipo da associare.
+ \item Si considerino le seguenti funzioni corrette: 
+\begin{itemize}
+ \item \texttt{boolean f3(int x,int y)\{ return x==y;\}}
+ \item \texttt{boolean f4(double x,double y)\{ return x!=y;\}}
+\end{itemize}
+ \item Per ciascuna delle invocazioni seguenti, predirre il risultato, quindi verificarlo nel framework:
+\begin{itemize}
+ \item \texttt{f3(1,2L)}
+ \item \texttt{f4(1,2L)}
+ \item \texttt{f3(1,1/2)}
+ \item \texttt{f3(1,1/2f)}
+ \item \texttt{f3(1,1/2)+3.4}
+ \item \texttt{\textquotedbl{}\textquotedbl{}+f4(1,1/2f)}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Correttezza dell'invocazione}
+Dato il seguente gruppo di funzioni:
+\begin{itemize}
+ \item \texttt{int f(int x, int y)\{ return x;\}}
+ \item \texttt{long f(int x, long y)\{ return y;\}}
+ \item \texttt{boolean f(double x, double y)\{ return x==y;\}}
+ \item \texttt{boolean f(float x, float y)\{ return x!=y;\}}
+\end{itemize}
+Si preveda (e si verifichi) il risultato delle valutazioni seguenti:
+\begin{itemize}
+ \item \texttt{f(0,1)}
+ \item \texttt{f(0.0,1)}
+ \item \texttt{f(0.0,1f)}
+ \item \texttt{f(1/3,2l)}
+ \item \texttt{f(0x01,0x10L)}
+ \item \texttt{f(1/2,0.5)}
+ \item \texttt{f(1/2,0.5f)}
+ \item \texttt{f(2l,2l)}
+ \item \texttt{f(010,07)}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ricorsione}
+Le funzioni possono, al loro interno, chiamare altre funzioni o sé stesse. Si analizzi la funzione seguente: 
+\begin{itemize}
+ \item \texttt{int f(int n)\{ return n==0? 1 : n*f(n-1); \}}
+\end{itemize}
+\begin{itemize}
+ \item Che tipo di comportamento realizza?
+ \item Per quali input funziona come dovrebbe?
+ \item Come si potrebbe migliorare, per far sì che funzioni correttamente per un insieme di input più ampio?
+%  \item La funzione effettua una ricorsione tail o non tail? Perché?
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(3)}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Ricorsione}
+Si analizzi la funzione \texttt{f(int, int)}:
+\begin{verbatim}
+int f(int x, int y) {
+   return f(x, y, x, y);
+}
+
+int f(int x, int y, int z, int w) {
+   return z==w ? z :
+      z>w ? f(x, y, z, w+y) :
+         f(x, y, z+x, w);
+}
+\end{verbatim}
+\begin{itemize}
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(3,7)}.
+ \item Che tipo di comportamento realizza? Si cerchi di intuirlo, in caso di difficoltà si usi il framework per ottenere dei suggerimenti.
+%  \item La funzione effettua una ricorsione tail o non tail? Perché?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni su array}
+Si analizzi la funzione \texttt{sum(int[])}:
+\begin{verbatim}
+int sum(int[] array){
+   return sum(array, 0);
+}
+
+int sum(int[] array, int pos){
+   return (pos==array.length) ? 0 :
+      array[pos] + sum(array, pos + 1);
+}
+\end{verbatim}
+\begin{itemize}
+ \item Quale funziona realizza? Una volta intuito, si utilizzi il framework per verificare.
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{sum(new int[]\{5,5,6,4\})}. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni di test}
+Si analizzi la funzione \texttt{test\_sum()}:
+\begin{verbatim}
+boolean test_sum(){
+   return sum(new int[]{10,20,30})==60 &&
+      sum(new int[]{10,20,30,40,50})==150 &&
+      sum(new int[]{10})==10 &&
+      sum(new int[]{})==0;
+}
+\end{verbatim}
+\begin{itemize}
+ \item Cosa realizza?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Modifica di funzioni}
+\begin{itemize}
+ \item Si modifichi la funzione \texttt{sum(int[])}, per fare in modo che, qualora l'array passato in ingresso abbia lunghezza superiore a 4, il risultato ritornato sia zero.
+ \item Verificare tramite il framework il corretto funzionamento della nuova implementazione.
+ \item Si modifichi \texttt{test\_sum()}, in maniera tale che venga provato il nuovo funzionamento di \texttt{sum(int[])}.
+ \item Si modifichi \texttt{test\_sum()}, aggiungendo una verifica che provi il funzionamento di \texttt{sum(int[])} per array contenenti numeri negativi.
+\end{itemize}
+Si mostri al docente l'esercizio completato per ricevere commenti.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Modifica di funzioni}
+Si consideri \texttt{sum(int[])}, nella versione non modificata.
+\begin{itemize}
+ \item Cosa succede se si sostituisce a ``\texttt{pos + 1}'' ``\texttt{pos + 2}''?
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{sum(new int[]\{10,2,30,4\})}
+ \item Quale nuova funzione si realizza?
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{sum(new int[]\{10,2,30\})}, e lo si verifichi nel framework.
+ \item Perché si ha un errore?
+ \item Si sostituisca \texttt{==} con \texttt{>=}. Si cerchi di capire se questa modifica risolve il problema, e perché. Si verifichi nel framework.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti}
+Si consideri \texttt{sum(int[])}, nella versione non modificata.
+\begin{itemize}
+ \item A partire dalla soluzione precedente, si costruisca la funzione \texttt{sum\_odd(int[])}, che somma solo gli elementi in posizione dispari.
+ \item Si scriva una funzione \texttt{test\_sum\_odd()}, che verifichi il funzionamento della precedente. In particolare, testare che funzioni con array di lunghezza zero, pari e dispari.
+ \item Si costruisca la funzione \texttt{sum\_abs(int[])} che somma i valori assouti degli elementi dell'array.
+ \item Si costruisca la funzione \texttt{test\_sum\_abs()} che verifica il corretto funzionamento di \texttt{sum\_abs(int[])} per array di varia lunghezza (fra cui zero), contenenti numeri positivi e negativi
+\end{itemize}
+Si mostri al docente l'esercizio completato per ricevere commenti.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esercizi aggiuntivi}
+Da questo punto, vengono proposti esercizi aggiuntivi. Sono consigliati per coloro che hanno completato \textbf{tutti} i precedenti con successo e desiderano esercitarsi ulteriormente.
+\end{frame}
+
+\begin{frame}
+\frametitle{Correttezza semantica, gruppi di funzioni}
+Si noti che più funzioni possono avere lo stesso nome, a patto che la loro signature (senza considerare il tipo di ritorno) sia diversa. Si preveda quali delle seguenti coppie di funzioni possono essere definite contemporaneamente senza generare errori:
+\begin{itemize}
+ \item \texttt{int f(int x, int y)\{ return x+y;\}}
+ \item \texttt{int f(long x, int y)\{ return x-y;\}}
+\end{itemize}
+\begin{itemize}
+ \item \texttt{int f(int x, int y)\{ return x+y;\}}
+ \item \texttt{int f(int x, int y)\{ return x-y;\}}
+\end{itemize}
+\begin{itemize}
+ \item \texttt{long f(int x, int y)\{ return x+y;\}}
+ \item \texttt{int f(int x, int y)\{ return x-y;\}}
+\end{itemize}
+\begin{itemize}
+ \item \texttt{boolean f(double x, double y)\{ return x==y;\}}
+ \item \texttt{boolean f(int x, int y)\{ return x==y;\}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Ricorsione}
+Si analizzi la funzione \texttt{f(int, int)}:
+\begin{verbatim}
+int f(int x) { return x == 0 ? 0 : f2(x-1); }
+int f2(int x) { return x == 1 ? 1 : f(x-1); }
+\end{verbatim}
+\begin{itemize}
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(6)}, si verifichi il risultato con il framework.
+ \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{f(5)}, si verifichi il risultato con il framework. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni}
+Si progettino le seguenti funzioni, e per ognuna si scriva un test appropriato che ne verifichi il funzionamento.
+\begin{itemize}
+ \item \texttt{int length(int[])}, che conta quanti elementi vi sono in un array.
+ \item \texttt{int evens(int[])}, che conta quanti elementi pari vi sono in un array.
+ \item \texttt{boolean arrayEquals(int[], int[])}, che ritorna true se i due array sono uguali (ossia hanno la stessa lunghezza, e presentano gli stessi elementi nello stesso ordine).
+\end{itemize}
+Si mostri al docente l'esercizio completato per ricevere commenti.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+Si progettino le seguenti funzioni, e per ognuna si scriva un test appropriato che ne verifichi il funzionamento.
+\begin{itemize}
+ \item \texttt{ric21(int[])} che riconosce la grammatica \{2\}1. Come esempio, si consideri il riconoscitore per 1\{2\} visto a lezione.
+ \item \texttt{ric111(int[])}, riconoscitore per la grammatica 1\{1\}1.
+ \item \texttt{ric12(int[])}, riconoscitore per la grammatica \{1\textbar{}2\}.
+ \item \texttt{ric123(int[])}, riconoscitore per la grammatica 1\{2\}3.
+ \item \texttt{ric1234(int[])}, riconoscitore per la grammatica \{1\textbar{}2\}\{3\textbar{}4\}.
+\end{itemize}
+\end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{Avanzato: ottimizzazione tail}
+% Le funzioni ricorsive tail sono ottimizzabili, e quindi potenzialmente più efficienti di quelle non-tail.
+% \begin{itemize}
+%  \item Si consideri la funzione \texttt{sum(int[])} vista in precedenza. La si modifichi facendo in modo che essa realizzi una ricorsione tail.
+%  \item Si costruisca l'albero delle invocazioni relativo alla chiamata \texttt{sum(new int[]\{5,5,6,4\})} di questa nuova funzione. Lo si confronti con quello precedentemente costruito (per la versione non-tail): cosa cambia? 
+%  \item Se le funzioni \texttt{sum\_odd(int[])} e \texttt{sum\_abs(int[])} precedentemente realizzate sono non-tail, se ne realizzi la versione tail.
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}
+\frametitle{Al termine dell'esercitazione}
+\begin{itemize}
+ \item Ricordarsi di effettuare il logout
+  \begin{itemize}
+    \item Dal menu Start, selezionare ``Disconnetti''
+  \end{itemize}
+ \item Una volta disconnessi:
+  \begin{itemize}
+    \item Se siete del primo turno, lasciate le macchine accese, di modo che i vostri colleghi del turno successivo siano agevolati
+    \item Se siete del secondo turno, spegnete le macchine
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+

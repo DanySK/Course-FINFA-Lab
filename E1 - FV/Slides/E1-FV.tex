@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 1 \\ Valutazione e typing di espressioni}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e1}
+  \begin{itemize}
+    \item in ``e1'', il carattere ``1'' è un uno, non una L minuscola!
+  \end{itemize}
+ \item Scaricare l'esercitazione odierna
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verifica del funzionamento del Framework F-V}
+\begin{itemize}
+ \item Sul desktop, troverete la cartella ``framework''
+ \item Fate doppio click sulla cartella
+ \item Si aprirà una nuova finestra, all'interno della quale troverete tre software
+ \item Fare doppio click sull'icona del FrameworkFV
+ \item Inserire nel campo ``Espressioni da valutare'' il testo \texttt{$1+2$}
+ \item Premere il tasto ``Valutazione''
+ \item Verificare che il risultato sia ``3''
+ \item In caso di risultato diverso dalle attese, chiamare subito il docente o il tutor
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Come esercitarsi con il Framework}
+\begin{itemize}
+ \item Nelle slides seguenti vi verranno proposti una serie di esempi di espressioni da valutare
+ \item \textbf{Prima} di eseguirle nel programma, cercare \textbf{sempre} di anticipare quale sarà il risultato della valutazione
+ \item Se quanto avete pensato corrisponde a quanto risponde il software, bene!
+ \item Se non corrisponde, bene lo stesso, a patto che ne capiate la ragione
+ \item Se ottenete un risultato inaspettato e non sapete giustificarlo, consultate il docente!
+ \item Al termine dell'esercitazione, \textbf{effettuate il log out} dalla macchina che state utilizzando.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Come comportarsi di fronte agli errori}
+\begin{itemize}
+ \item Errare humanum est
+  \begin{itemize}
+    \item Ed è anche molto meglio sbagliare in laboratorio che all'esame!
+  \end{itemize}
+ \item È importante, di fronte agli errori, non scoraggiarsi, leggere \textbf{attentamente} il messaggio di errore, \textbf{capirlo} e studiare una contromisura.
+ \item Java segnala gli errori in maniera piuttosto precisa...
+ \item ...il framework, che ne usa una sottoparte molto ristretta, molto meno!
+ \item In caso di errore, il framework vi mostrerà un messaggio di errore, seguito dal codice Java reale che è stato invocato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operazioni su booleani}
+\begin{itemize}
+ \item \texttt{true}
+ \item \texttt{false}
+ \item \texttt{!false}
+ \item \texttt{true \& false}
+ \item \texttt{true \textbar{} false}
+ \item \texttt{true \textbar{} true \& false \textbar{} false} --- Quale operatore è prioritario? In che ordine si valuta?
+ \item \texttt{true \& true \textbar{} false \& false}
+ \item \texttt{true \& (true \textbar{} false) \& false}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operazioni su interi -- elementi di base}
+\begin{itemize}
+ \item \texttt{1+2}
+ \item \texttt{5*8}
+ \item \texttt{10/2}
+ \item \texttt{10/3} --- Quanto fa? $3$, $3.\bar{3}$ o $4$?
+ \item \texttt{10\%3} --- Classi di resto, come in Geometria
+ \item \texttt{6/2*(1+2)} --- Quanto fa? $6$ o $9$?
+ \item \texttt{4+4*4+4*4-4/4+4*4}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operazioni su interi -- complemento a 2, overflow}
+In Java, gli interi negativi sono rappresentati in complemento a 2. Altri linguaggi, come C, consentono di dichiarare \texttt{unsigned} alcuni tipi di dato, ossia mai negativi. Java non offre questa possibilità. Calcolate \textbf{a mano} il complemento a due \textbf{prima} di eseguire!
+\begin{itemize}
+ \item \texttt{8-7} --- Trasformate 7 in complemento a 2, quindi sommate!
+ \item \texttt{2147483647+1} --- Cos'è successo??? Suggerimento: in Java gli \texttt{int} si rappresentano con \textbf{32bit}!
+ \item \texttt{2147483647*2}
+ \item \texttt{-2147483648-1}
+ \item \texttt{-(-2147483648)}
+ \item \texttt{-(-2147483648L)} --- La \texttt{L} finale indica a Java di interpretare quel numero come tipo \texttt{long}. I \texttt{long}, a differenza degli \texttt{int}, hanno \textbf{64bit}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operazioni su numeri in virgola mobile}
+Java (così come C) consente di operare con numeri decimali. Ne esistono di due tipi \texttt{float}, rappresentati con \textbf{32bit}, e \texttt{double}, rappresentati con \textbf{64bit}.
+\begin{itemize}
+ \item \texttt{1.0} --- Aggiungere una parte decimale ad un numero lo fa interpretare a Java come \texttt{double}.
+ \item \texttt{1+2.1} --- Un'operazione fra un \texttt{int} e un \texttt{double} ha come risultato un double
+ \item \texttt{10.0/3} --- Confrontare il risultato con \texttt{10/3}
+ \item \texttt{10d/3} --- Posporre \texttt{d} ad un numero forza Java ad interpretarlo come \texttt{double}.
+ \item \texttt{10f/3} --- Posporre \texttt{f} ad un numero forza Java ad interpretarlo come \texttt{float}. Notare come i \texttt{float} siano meno precisi dei \texttt{double}, confrontando questo risultato con il precedente
+ \item \texttt{15.45E24} --- Supporto alla notazione scientifica
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Precisione dei numeri in virgola mobile}
+Internamente, sia i double che i float, riservano alcuni bit alla rappresentazione dell'esponente, ed altri alla rappresentazione della parte significativa (mantissa): esattamente come i numeri scritti in notazione scientifica.
+\begin{itemize}
+ \item \texttt{1e10+1e-5}
+ \item \texttt{1e10+1e-6} --- Troppe cifre significative per rappresentare correttamente il numero!
+ \item \texttt{1e10+1e-7} --- I numeri sono di ordine tanto diverso che a fronte della somma il secondo viene ``mangiato''.
+ \item \texttt{1+1e-15}
+ \item \texttt{1+1e-15*4} --- La moltiplicazione viene fatta per prima, dunque non si ha perdita di precisione.
+ \item \texttt{1+1e-15*3+1e-15}
+ \item \texttt{4+1e-15+1e-15+1e-15+1e-15} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operazioni su stringhe}
+Java consente di manipolare anche le stringhe con l'operatore ``+''. Questa caratteristica è assente o differente in molti altri linguaggi (in C ad esempio).
+\begin{itemize}
+ \item \texttt{\textquotedbl{}a\textquotedbl{}+\textquotedbl{}b\textquotedbl{}}
+ \item \texttt{\textquotedbl{}1\textquotedbl{}+\textquotedbl{}2\textquotedbl{}} --- Le stringhe non vengono convertite in numeri automaticamente!
+ \item \texttt{1+\textquotedbl{}2\textquotedbl{}} --- La somma di un numero e una stringa, ha come risultato una stringa
+ \item \texttt{1+2+\textquotedbl{}3\textquotedbl{}+4+5}
+ \item \texttt{1+2+\textquotedbl{}3\textquotedbl{}+\textquotedbl{}4\textquotedbl{}+\textquotedbl{}5\textquotedbl{}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Arrays}
+\begin{itemize}
+ \item \texttt{new int[]\{\}} --- Tipo per \texttt{riferimento}!
+ \item \texttt{new int[]\{\}.length}
+ \item \texttt{new int[]\{1, 2, 3\}}
+ \item \texttt{new int[10].length}
+ \item \texttt{new boolean[]\{true, true, false\}[1]}
+ \item \texttt{new String[]\{}``\texttt{a}''\texttt{,}``\texttt{b}''\texttt{\}[0]}
+\end{itemize}
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Formato Binario, Ottale, Esadecimale}
+% Java offre delle utilità per formattare i numeri in basi diverse. Queste sono piuttosto comode per capire cosa accada, ma \textbf{non} usatele quando vi esercitate, dato che all'esame \textbf{non} potrete farne uso!
+% \begin{itemize}
+%  \item \texttt{Integer.toBinaryString(2147483647)} 
+%  \item \texttt{Integer.toBinaryString(2147483647+1)} 
+%  \item \texttt{Integer.toBinaryString(-(-2147483648))} 
+%  \item \texttt{Integer.toHexString(2147483647)} 
+%  \item \texttt{Integer.toHexString(2147483647+1)} 
+%  \item \texttt{Integer.toHexString(-(-2147483648))}
+% \end{itemize}
+% Usatele per gli esercizi della prossima slide se qualcosa non vi torna, ma solo \textbf{dopo} aver fatto i conti a mano.
+% 
+% \textbf{Attenzione:} non vengono inseriti gli zeri a sinistra per completare il numero di bit! Attenti ai segni!
+% \end{frame}
+
+\begin{frame}
+\frametitle{Operatori bitwise: shift}
+Java (come C) consente di operare anche a livello di bit. %Usare le utilità prima presentate per verificare i risultati.
+\begin{itemize}
+ \item \texttt{$1<<0$} 
+ \item \texttt{$1<<3$} 
+ \item \texttt{$1<<32$} 
+ \item \texttt{$(1<<2)<<3$} 
+ \item \texttt{$0xf << 4$} 
+ \item \texttt{$0xabcd << 8$} 
+ \item \texttt{$100 >>> 1$} --- Non considera il segno!
+ \item \texttt{$-100 >> 1$} 
+ \item \texttt{$-100 >>> 1$} --- Visto?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operatori bitwise: \& e \textbar{}}
+Java (come C) consente di operare anche a livello di bit.% Usare le utilità prima presentate per verificare i risultati.
+\begin{itemize}
+ \item \texttt{1 \textbar{} 2} 
+ \item \texttt{1 \textbar{} 4} 
+ \item \texttt{12345 \& 54321} 
+ \item \texttt{-12345 \& 54321} 
+ \item \texttt{12345 \& -54321} 
+ \item \texttt{-12345 \& -54321} 
+ \item \texttt{1$<<$7 \textbar{} 1$<<$10 } 
+ \item \texttt{0xffffffff \& 0x0000ffff} --- L'operatore \& è spesso usato per ``mascherare'' una parte dati considerata non significativa
+ \item \texttt{0xffffffff \& 0xffff0000} 
+ \item \texttt{0xf$<<$12 \textbar{} 0xf$<<$4} 
+ \item \texttt{1$<<$12 \textbar{} 2$<<$12 \textbar{} 4$<<$12 \textbar{} 8$<<$12} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Errori sintattici}
+Provare queste espressioni ed osservare con cura il tipo di errore!
+\begin{itemize}
+ \item \texttt{1+>3} 
+ \item \texttt{1+(2} 
+ \item \texttt{1e} 
+ \item \texttt{1e/5} 
+ \item \texttt{1)} --- Quale errore è segnalato?
+ \item \texttt{1^^4} 
+ \item \texttt{\textquotedbl{}a}
+\end{itemize}
+Provate a commettere altri errori di sintassi, e verificate il comportamento del framework ed il tipo di errore ritornato!
+\end{frame}
+
+\begin{frame}
+\frametitle{Errori semantici}
+Provare queste espressioni ed osservare con cura il tipo di errore!
+\begin{itemize}
+ \item \texttt{1/0} 
+ \item \texttt{1.0/0} --- I numeri in virgola mobile supportano $\infty$!
+ \item \texttt{-1.0/0} 
+ \item \texttt{1\%0}
+ \item \texttt{1.0\%0} --- Cosa succede?
+ \item \texttt{2147483648} --- Come si più risolvere?
+ \item \texttt{1+false} 
+ \item \texttt{a} 
+ \item \texttt{new int[]\{true\}} 
+ \item \texttt{new int[]\{1\}[a]}
+ \item \texttt{new int[]\{1, 2\}[10]}
+ \item \texttt{new int[]\{1, 2\}[-1]}
+ \item \texttt{new int[]\{1, 2\}[2]} --- Perché dà errore?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio riassuntivo}
+Considerando le priorità degli operatori viste a lezione, si risolva su carta e si provi la correttezza tramite il framework FV di:
+\begin{itemize}
+ \item \texttt{5+7\&8 \textbar{} 9 \textbar{} 10$<<$3-$\sim$7} 
+  \begin{itemize}
+  \item In Windows, il carattere ``$\sim$'' si ottiene tenendo premuto Alt e premendo in sequenza 1, 2, 6 nel tastierino numerico.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Al termine dell'esercitazione}
+\begin{itemize}
+ \item Ricordarsi di effettuare il logout
+  \begin{itemize}
+    \item Dal menu Start, selezionare ``Disconnetti''
+  \end{itemize}
+ \item Una volta disconnessi:
+  \begin{itemize}
+    \item Se siete del primo turno, lasciate le macchine accese, di modo che i vostri colleghi del turno successivo siano agevolati
+    \item Se siete del secondo turno, spegnete le macchine
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+

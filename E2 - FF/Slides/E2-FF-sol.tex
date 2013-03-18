@@ -1,0 +1,342 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Soluzioni Laboratorio 2 \\ Funzioni e ricorsione}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Ricorsione}
+\begin{itemize}
+ \item \texttt{int f(int n)\{ return n==0? 1 : n*f(n-1); \}}
+\end{itemize}
+\begin{itemize}
+ \item Realizza il fattoriale.
+ \item Fino a \texttt{f(12)}, incluso. Poi gli interi non sono abbastanza grandi da contenere il risultato (tant'è che \texttt{f(13)/f(12)} dà come risultato \texttt{4}, e non \texttt{13}.
+ \item Utilizzando il tipo \texttt{long}, si riesce a migliorare: \\ \texttt{long f(long n)\{ return n==0? 1 : n*f(n-1); \}}. Si arriva a computare correttamente \texttt{f(20)}
+ \item Non tail: l'ultima operazione da effettuare non è la chiamata ricorsiva ma la somma.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Ricorsione}
+Si analizzi la funzione \texttt{f(int, int)}:
+\begin{verbatim}
+int f(int x, int y) {
+   return f(x, y, x, y);
+}
+
+int f(int x, int y, int z, int w) {
+   return z==w ? z :
+      z>w ? f(x, y, z, w+y) :
+         f(x, y, z+x, w);
+}
+\end{verbatim}
+\begin{itemize}
+ \item Realizza il minimo comune multiplo
+ \item Ricorsione tail: in ogni caso, l'ultima operazione effettuata è la chiamata ricorsiva.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Modifica di funzioni}
+\begin{verbatim}
+int sum(int[] array){
+   return array.length > 4 ? 0 : sum(array, 0);
+}
+int sum(int[] array,int pos){
+   return (pos==array.length) ? 0 :
+      array[pos]+sum(array,pos+1);
+}
+
+boolean test_sum(){
+   return sum(new int[]{10,20,30})==60 &&
+      sum(new int[]{10,20,30,40,50})==0 &&
+      sum(new int[]{10})==10 &&
+      sum(new int[]{})==0 &&
+      sum(new int[]{-10,-20,-30})==-60;
+}
+\end{verbatim}
+
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Modifica di funzioni}
+Si consideri \texttt{sum(int[])}, nella versione non modificata.
+\begin{itemize}
+ \item Vengono sommati solo gli elementi in posizione pari, ma si rischia di andare fuori dall'array.
+ \item Sostituendo \texttt{==} con \texttt{>=} si risolve il problema dell'uscita dall'array, poiché non appena l'indice esce dall'intervallo consentito si ritorna 0 (che viene sommato all'indietro con i valori precedenti).
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti}
+\begin{verbatim}
+int sum_odd(int[] array){
+   return sum_odd(array, 1);
+}
+
+int sum_odd(int[] array, int pos){
+   return (pos>=array.length) ? 0 :
+      array[pos] + sum_odd(array, pos + 2);
+}
+
+boolean test_sum_odd(){
+   return sum_odd(new int[]{10,20,30})==20 &&
+      sum_odd(new int[]{10,20,30,40,50})==60 &&
+      sum_odd(new int[]{10,20,30,40})==60 &&
+      sum_odd(new int[]{10,20})==20 &&
+      sum_odd(new int[]{10})==0 &&
+      sum_odd(new int[]{})==0 &&
+      sum_odd(new int[]{-10,-20,-30})==-20;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruzione di funzioni a partire da funzioni esistenti}
+\begin{verbatim}
+int sum_abs(int[] array) {
+   return sum_abs(array, 0);
+}
+
+int sum_abs(int[] array, int pos) {
+   return (pos==array.length) ? 0 :
+      (array[pos] < 0 ? -array[pos] : array[pos])
+      + sum_abs(array, pos + 1);
+}
+
+boolean test_sum_abs() {
+   return sum_abs(new int[]{10,20,30})==60 &&
+      sum_abs(new int[]{10,20,-30,-40,50})==150 &&
+      sum_abs(new int[]{-10,20,30,40})==100 &&
+      sum_abs(new int[]{-10,-20})==30 &&
+      sum_abs(new int[]{10})==10 &&
+      sum_abs(new int[]{})==0;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esercizi aggiuntivi}
+Da questo punto, vengono proposti esercizi aggiuntivi. Sono consigliati per coloro che hanno completato \textbf{tutti} i precedenti con successo e desiderano esercitarsi ulteriormente.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Ricorsione}
+Si analizzi la funzione \texttt{f(int, int)}:
+\begin{verbatim}
+int f(int x) { return x == 0 ? 0 : f2(x-1); }
+int f2(int x) { return x == 1 ? 1 : f(x-1); }
+\end{verbatim}
+\begin{itemize}
+ \item Con \texttt{f(5)}, si ha uno stack overflow: le due funzioni si richiamano l'un l'altra all'infinito, riempiendo l'area di memoria riservata a contenere lo stack.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni}
+\begin{verbatim}
+int length(int[] array) {
+   return array.length;
+}
+
+boolean test_length() {
+   return length(new int[]{10,20,30})==3 &&
+      length(new int[]{10,20,-30,-40,50})==5 &&
+      length(new int[]{-10,20,30,40})==4 &&
+      length(new int[]{-10,-20})==2 &&
+      length(new int[]{10})==1 &&
+      length(new int[]{})==0;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni}
+\begin{verbatim}
+int evens(int[] array) {
+   return evens(array, 0, 0);
+}
+
+int evens(int[] array, int pos, int buf) { 
+   return pos == array.length ? buf :
+      evens(array, pos + 1, buf + (array[pos] % 2 == 0 ? 1 : 0));
+}
+
+boolean test_evens() {
+   return evens(new int[]{12,22,32})==3 &&
+      evens(new int[]{1,2,-3,-4,5})==2 &&
+      evens(new int[]{-1,2,3,4})==2 &&
+      evens(new int[]{-1,-2})==1 &&
+      evens(new int[]{10})==1 &&
+      evens(new int[]{})==0;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni}
+\begin{verbatim}
+boolean arrayEquals(int[] a, int[] b) {
+return a.length != b.length ? false : arrayEquals(a, b, 0);
+}
+
+boolean arrayEquals(int[] a, int[] b, int pos) {
+   return pos == a.length ? true :
+      a[pos] != b[pos] ? false : 
+      arrayEquals(a, b, pos + 1);
+}
+
+boolean test_arrayEquals() {
+   return arrayEquals(new int[]{}, new int[]{}) &&
+   arrayEquals(new int[]{1,2,3}, new int[]{1,2,3}) &&
+   arrayEquals(new int[]{1,0,0,87}, new int[]{1,0,0,87})&&
+   !arrayEquals(new int[]{}, new int[]{0}) &&
+   !arrayEquals(new int[]{0,1,2}, new int[]{2,1,0}) &&
+   !arrayEquals(new int[]{0,0,0,0}, new int[]{0,0,0,1});
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+\begin{verbatim}
+boolean ric21(int[] a) {
+   return ric2(a, 0);
+}
+
+boolean ric2(int[] a, int pos) {
+   return pos == a.length ? false :
+      a[pos] != 2 ? ric1(a, pos) : 
+      ric2(a, pos + 1);
+}
+
+boolean ric1(int[] a, int pos) {
+   return a[pos] == 1 && a.length == pos + 1;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+\begin{verbatim}
+/* Note that 1{1}1 = 11{1} */
+boolean ric111(int[] a) {
+   return a.length > 1 && a[0] == 1 && a[1] == 1 ?
+      ric111(a, 1) : false;
+}
+
+boolean ric111(int[] a, int pos) {
+   return pos == a.length ||
+      (a[pos] == 1 && ric111(a, pos+1));
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+\begin{verbatim}
+boolean ric12(int[] a) {
+   return a.length == 0 || ric12(a, 0);
+}
+
+boolean ric12(int[] a, int pos) {
+   return pos == a.length ? true : 
+      (a[pos] == 1 || a[pos] == 2) && ric12(a, pos + 1);
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+\begin{verbatim}
+boolean ric123(int[] a) {
+   return a.length > 1 && a[0] == 1 && ric23(a, 1);
+}
+boolean ric23(int[] a, int pos) {
+   return pos == a.length ? false : a[pos] == 2 ? ric23(a, pos + 1) :
+      ric3(a, pos);
+}
+boolean ric3(int[] a, int pos) {
+   return pos == a.length -1 && a[pos] == 3;
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Progettare nuove funzioni: riconoscitori EBNF}
+\begin{verbatim}
+boolean ric1234(int[] a) {
+   return a.length == 0 || ric12(a, 0);
+}
+boolean ric12(int[] a, int pos) {
+   return pos == a.length ||
+      ((a[pos] == 1 || a[pos] == 2) ? ric12(a, pos + 1) :
+      ric34(a, pos));
+}
+boolean ric34(int[] a, int pos) {
+   return pos == a.length ||
+      ((a[pos] == 3 || a[pos] == 4) ? ric34(a, pos + 1) :
+      false);
+}
+\end{verbatim}
+\end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{Avanzato: ottimizzazione tail}
+% Soluzione: si calcola il risultato mano a mano che si procede, accumulandolo in una variabile che viene passata quando si effettua la chiamata.
+% \begin{verbatim}
+% int sum(int[] array){
+%    return sum(array, 0, 0);
+% }
+% int sum(int[] array,int pos, int buf){
+%    return pos==array.length ? buf :
+%       sum(array, pos+1, buf + array[pos]);
+% }
+% 
+% int sum_odd(int[] array){
+%    return sum_odd(array, 1, 0);
+% }
+% int sum_odd(int[] array,int pos, int buf){
+%    return pos>=array.length ? buf :
+%       sum(array, pos+2, buf + array[pos]);
+% }
+% \end{verbatim}
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% \frametitle{Avanzato: ottimizzazione tail}
+% Soluzione: si calcola il risultato mano a mano che si procede, accumulandolo in una variabile che viene passata quando si effettua la chiamata.
+% \begin{verbatim}
+% int sum_abs(int[] array){
+%    return sum_abs(array, 0, 0);
+% }
+% int sum_abs(int[] array,int pos, int buf){
+%    return pos==array.length ? buf : 
+%       sum_abs(array, pos+1, buf +
+%          (array[pos] >= 0 ? array[pos] :
+%             -array[pos]));
+% }
+% \end{verbatim}
+% \end{frame}
+
+
+\end{document}
+
