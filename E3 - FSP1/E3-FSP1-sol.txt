@@ -1,0 +1,269 @@
+==========================
+= USO BASE DEL FRAMEWORK =
+==========================
+
+print(fatt(5)+"");
+
+--*--*--*--*--
+
+println(fatt(0)+"");
+println(fatt(1)+"");
+println(fatt(2)+"");
+println(fatt(3)+"");
+println(fatt(4)+"");
+println(fatt(5)+"");
+
+versione più furba:
+
+for(int i=0;i<6;i++){
+   println(fatt(i)+"");
+}
+
+--*--*--*--*--
+
+print(fatt(0)+", ");
+print(fatt(1)+", ");
+print(fatt(2)+", ");
+print(fatt(3)+", ");
+print(fatt(4)+", ");
+print(fatt(5)+"");
+
+oppure: 
+
+print(fatt(0)+", "+fatt(1)+", "+fatt(2)+", "+fatt(3)+", "+fatt(4)+", "+fatt(5));
+
+versione furba:
+
+int i = 0;
+for(;i<5;i++){
+   print(fatt(i)+", ");
+}
+print(fatt(i)+"");
+
+
+==========================================
+= Creazione ed assegnamento di variabili =
+==========================================
+
+int x;
+int y;
+y = 9;
+y = y - 2;
+x = 10 - y;
+print("x = " + x + ", y = " + y); 
+
+
+===========================
+= Operatore di incremento =
+===========================
+
+int a = 0;
+int b = f(--a);
+print("a = " + a + ", b = " + b);
+
+--*--*--*--*--
+
+int a = 0;
+int b = f(a--);
+print("a = " + a + ", b = " + b);
+
+--*--*--*--*--
+
+int a = 0;
+int b = f(a-1);
+print("a = " + a + ", b = " + b);
+
+
+================
+= Costrutto if =
+================
+
+Verifica che nell'array a sia presente l'elemento n.
+
+
+=======================
+= Costrutto if - else =
+=======================
+
+A partire dall'ultima occorrenza di zero nell'array, la funzione misura la differenza fra il numero di elementi pari ed il numero di elementi dispari. Se vi sono più pari il risultato è positivo, se vi sono più dispari negativo.
+
+
+=================
+= Costrutto for =
+=================
+
+La funzione ritorna la somma degli elementi pari presenti nell'array. Con qualunque array di lunghezza n, vengono effettuate n iterazioni. Essendo {2,1,5,9,7,3,5,154} lungo 8 elementi, vengono effettuate 8 iterazioni prima dell'uscita. La condizione booleana del for viene invece testata n+1 volte: n volte passa, mentre la (n+1)-esima la condizione è falsa (perché i = a.length) e si esce dal ciclo. Nel caso proposto, dunque, la condizione viene testata 9 volte.
+
+
+============================
+= Analisi di funzioni date =
+============================
+
+Si desidera calcolare la media matematica dei valori contenuti nell'array.
+
+L'operazione di cast è necessaria per ottenere valori decimali invece dell'approssimazione ad intero per difetto. Infatti, nonostante il tipo di ritorno sia un double, se l'ultima divisione è effettuata fra interi il loro valore è un intero, e solo dopo viene effettuata la conversione a double. Al contrario, se (almeno) uno dei due valori è di tipo double, il risultato dell'operazione è double, e conseguentemente ha piena precisione e non vengono effettuati arrotondamenti.
+
+--*--*--*--*--
+
+Riconosce la grammatica {1}.
+
+i non può essere dichiarata all'interno del for, poiché viene utilizzata nel confronto che si effettua dopo il ciclo, prima del return. Se la si dichiara all'interno del for, essa non è accessibile al di fuori.
+
+Il controllo finale è necessario a verificare che si sia controllato l'array per intero. Difatti, nel caso in cui sia presente qualche valore che non sia 1 all'interno della sequenza, il ciclo termina prima della fine, ed il valore di i è diverso da a.length.
+
+Nel caso proposto, vengono effettuate 6 iterazioni. Al settimo controllo, con i = 6, la condizione fallisce poiché a[6] != 1. A questo punto viene verificato se i (che vale 6) sia uguale alla lunghezza di a (10). Non essendo uguali, il risultato è false.
+
+--*--*--*--*--
+
+a = {-5,-7,5,4,3}
+count = 0
+   i = 4
+   i >= 0 ? SI
+a[4] > 0 ? SI
+count = 1
+   i = 3
+   i >= 0 ? SI
+a[3] > 0 ? SI
+count = 2
+   i = 2
+   i >= 0 ? SI
+a[2] > 0 ? SI
+count = 3
+   i = 1
+   i >= 0 ? SI
+a[1] > 0 ? NO
+   i = 0
+   i >= 0 ? SI
+a[0] > 0 ? NO
+   i = -1
+   i >= 0 ? NO
+ritorna count (3).  
+
+La funzione conta i numeri positivi presenti nell'array.
+
+
+===============================================
+= Esempio di algoritmo in linguaggio naturale =
+===============================================
+
+Riconosce la grammatica {1|2}3.
+
+boolean f(int[] a){
+   int i = 0;
+   for(; i < a.length && (a[i] == 1 || a[i] == 2); i++);
+   return (i == a.length - 1) && a[i] == 3;
+}
+
+soluzione un pelo migliore, ma che non rispetta alla lettera l'algoritmo in linguaggio naturale:
+
+boolean f(int[] a){
+   int i = 0;
+   for(; i < a.length - 1 && (a[i] == 1 || a[i] == 2); i++);
+   return (i == a.length - 1) && a[i] == 3;
+}
+
+
+=================================
+= Creazione guidata di funzioni =
+=================================
+
+boolean f(int[] a){
+   if(a.length < 1 || a[0] != 0) {
+      return false;
+   }
+   int i = 1;
+   for(; i < a.length && a[i] == 1; i++);
+   return i == a.length;
+}
+
+boolean test(){
+   return f(new int[]{0}) &&
+      f(new int[]{0,1}) &&
+      f(new int[]{0,1,1,1}) &&
+      f(new int[]{0,1,1,1,1,1,1}) &&
+      !f(new int[]{}) &&
+      !f(new int[]{0,1,1,1,1,1,1,2}) &&
+      !f(new int[]{1,1,1,1,1,1}) &&
+      !f(new int[]{0,0,1,1,1,1});
+}
+
+--*--*--*--*--
+
+boolean f(int[] a){
+   if(a.length < 1 || a[0] != 0) {
+      return false;
+   }
+   int i = 1;
+   for(; i < a.length && a[i] == 1; i++);
+   return (i == a.length - 1) && a[i] == 2;
+}
+
+boolean test(){
+   return f(new int[]{0,2}) &&
+      f(new int[]{0,1,2}) &&
+      f(new int[]{0,1,1,1,2}) &&
+      f(new int[]{0,1,1,1,1,1,1,2}) &&
+      !f(new int[]{}) &&
+      !f(new int[]{0,1,1,1,1,1,1}) &&
+      !f(new int[]{1,1,1,1,1,2}) &&
+      !f(new int[]{0,0,1,1,1,1,2});
+}
+
+=============================
+= Creazione di una funzione =
+=============================
+
+1) tengo il conto di quanti elementi ho sommato (inizialmente zero)
+2) tengo conto dei quanto vale la mia somma (inizialmente zero)
+3) per ciascun elemento dell'array, a partire dal fondo:
+3.1) se ne ho sommati k, basta così
+3.2) altrimenti, somma l'elemento corrente alla somma, e conta che ho sommato un altro elemento
+4) ritorna la somma
+
+int sum(int[] a, int k) {
+   int count = 0;
+   int sum = 0;
+   for(int i = a.length - 1; i >= 0 && count < k; i--) {
+      sum = sum + a[i];
+      count++;
+   }
+   return sum;
+}
+
+boolean test() {
+   return sum(new int[]{}, 0) == 0 &&
+   sum(new int[]{1,2,3,4,5}, 2) == 9 &&
+   sum(new int[]{}, 100) == 0 &&
+   sum(new int[]{1,2,3,4,5}, 1000) == 15 &&
+   sum(new int[]{1,2,3,4,5}, 0) == 0 &&
+   sum(new int[]{1,2,3,4,-5}, 3) == 2;
+}
+
+Soluzione più carina:
+
+int sum(int[] a, int k) {
+   int sum = 0;
+   for(int i = a.length - 1; i >= 0 && a.length - i - 1 < k; i--) {
+      sum = sum + a[i];
+   }
+   return sum;
+}
+
+Soluzione "all'avanti".
+
+int sum(int[] a, int k) {
+   int i;
+   // Calcolo del punto di partenza
+   if (k > a.length) {
+      i = 0;
+   } else {
+      i = a.length - k;
+   }
+   int sum = 0;
+   for(; i < a.length; i++) {
+      sum = sum + a[i];
+   }
+   return sum;
+}
+
+

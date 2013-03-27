@@ -1,0 +1,479 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 3 \\ Basi di programmazione strutturata}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e3}
+ \item Scaricare l'esercitazione odierna
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verifica del funzionamento del Framework F-S}
+\begin{itemize}
+ \item Sul desktop, troverete la cartella ``framework''
+ \item Fate doppio click sulla cartella
+ \item Si aprirà una nuova finestra, all'interno della quale troverete tre software
+ \item Fare doppio click sull'icona del FrameworkFS
+ \item Inserire nel campo ``Blocco da eseguire'' il testo \texttt{println(\textquotedbl{}Hello World\textquotedbl{});}
+ \item Premere il tasto ``Esecuzione''
+ \item Verificare che il risultato sia ``\texttt{Hello World}''
+ \item In caso di risultato diverso dalle attese, chiamare subito il docente o il tutor
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Come comportarsi di fronte agli errori}
+\begin{itemize}
+ \item Errare humanum est
+  \begin{itemize}
+    \item Ed è anche molto meglio sbagliare in laboratorio che all'esame!
+  \end{itemize}
+ \item È importante, di fronte agli errori, non scoraggiarsi, leggere \textbf{attentamente} il messaggio di errore, \textbf{capirlo} e studiare una contromisura.
+ \item Java segnala gli errori in maniera piuttosto precisa...
+ \item ...il framework, che ne usa una sottoparte molto ristretta, molto meno!
+ \item In caso di errore, il framework vi mostrerà un messaggio che spiega cosa (il compilatore pensa che) sia successo, seguito dal codice Java reale che è stato invocato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Come esercitarsi con il Framework}
+\begin{itemize}
+ \item Questo framework è abbastanza diverso dai due precedenti
+ \item Serve ad abituarvi ad utilizzare un linguaggio imperativo
+ \item Come in F-F, il blocco ``Dichiarazione di funzioni'' conterrà le funzioni che vorrete definire
+ \item il blocco ``Blocco da eseguire'' potrà contenere una serie di statement, fra i quali due istruzioni (non esistenti in Java o C ma ammesse all'interno del frameworkFS)
+  \begin{itemize}
+    \item \texttt{print(String s)}: scrive nel risultato la stringa \texttt{s}. Ad esempio, \texttt{print(\textquotedbl{}ciao\textquotedbl{});} mostrerà nel risultato \texttt{ciao}.
+    \item \texttt{println(String s)}: scrive nel risultato la stringa \texttt{s}, quindi va a capo. Ad esempio, \texttt{print(\textquotedbl{}ciao\textquotedbl{});} mostrerà nel risultato \texttt{ciao}, quindi andrà a capo.
+  \end{itemize}
+\end{itemize}
+Cosa fa il blocco seguente?
+\begin{verbatim}
+println("ciao");
+print("ciao");
+print(" ");
+print("Lulù");
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+\frametitle{Formattazione}
+A partire da questo laboratorio, è \textbf{richiesto} di formattare correttamente il codice. Perché?
+\begin{itemize}
+ \item Il codice correttamente formattato è più comprensibile agli altri che lo leggono
+ \item Il codice correttamente formattato sarà più comprensibile a voi quando lo rileggerete dopo del tempo
+ \item Esistono linguaggi (ad esempio Python, molto diffuso) che utilizzano la formattazione del codice per definire la \textbf{semantica} di un programma, quindi un codice mal formattato in quei linguaggi semplicemente \textbf{non funziona come atteso}.
+ \item Meno importante in senso assoluto, ma importante per voi: all'esame, gli errori di formattazione verranno valutati. Non perdete punti per simili sciocchezze!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Formattazione, semplice esempio}
+\begin{verbatim}
+int fatt(int n){if(n==0)
+{return 1;}else{return n*fatt(n-1);}}
+\end{verbatim}
+La funzione sopra, perfettamente funzionante in Java, non ha una struttura chiaramente comprensibile nonostante sia estremamente semplice. Si guardi la stessa meglio formattata:
+\begin{verbatim}
+int fatt(int n) {
+   if(n==0) {
+      return 1;
+   } else {
+      return n*fatt(n-1);
+   }
+}
+\end{verbatim}
+Meglio, o no? Immaginate cosa possa succedere con programmi di qualche centinaio di righe di codice: se mal formattati, diventano impossibili da comprendere.
+\end{frame}
+
+\begin{frame}
+\frametitle{Uso base del framework}
+Si consideri la funzione \texttt{int fatt(int n)} prima introdotta.
+\begin{itemize}
+ \item Si testi il funzionamento della funzione, stampando il risultato di \texttt{fatt(5)}. Per farlo, si ricorda l'utilizzo della funzione \texttt{void print(String s)}.
+ \item Si scriva un blocco da eseguire che stampi, uno sotto l'altro, il risultato delle invocazioni della fuzione per input da 0 a 5
+ \item Si scriva un blocco da eseguire che stampi, uno di seguito all'altro, separato da virgole, il risultato delle invocazioni della fuzione per input da 0 a 5 (il risultato atteso è \texttt{1, 1, 2, 6, 2, 120}).
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione di variabili}
+È possibile definire nuove variabili tramite l'assegnamento di due elementi:
+\begin{itemize}
+ \item Un tipo di dato
+ \item Un nome di variabile
+ \item Esempi:
+\begin{itemize}
+ \item \texttt{int pippo;} Nuova variabile di tipo \texttt{int}, di nome \texttt{pippo}
+ \item \texttt{double pluto2;}  Nuova variabile di tipo \texttt{double}, di nome \texttt{pluto2}
+ \item \texttt{int[] alda\_merini;} Nuova variabile di tipo \texttt{int[]}, di nome \texttt{alda\_merini}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Assegnamento di variabili}
+Una volta che una variabile è stata dichiarata, è possibile assegnarle un valore, tramite l'operatore \texttt{=}.
+\begin{itemize}
+ \item \texttt{=} in Java (ma anche in C, C\#, C++ ed in una miriade di linguaggi simili) \textbf{non significa uguale}, ma \textbf{assegnamento}.
+ \item Non confondere \texttt{==}, operatore di uguaglianza che ritorna un boolean, con \texttt{=}, operatore di \textbf{assegnamento}.
+ \item Analogamente al tipo di ritorno di una funzione, un assegnamento va a buon fine se il tipo che si sta provando ad assegnare è uguale, o convertibile per coercizione, al tipo della variabile.
+ \item È \textbf{possibile} condensare in un'unica linea la dichiarazione di una variabile ed il suo assegnamento (e.g. \texttt{int s = 4;}). Anche se fatte nel medesimo statement, dichiarazione ed assegnamento sono comunque due cose distinte.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione ed assegnamento di variabili}
+Si considerino le seguenti funzioni:
+\begin{verbatim}
+int fi(){
+   return 2;
+}
+double fd(){
+   return 1.1;
+}
+boolean fb(){
+   return true;
+}
+\end{verbatim}
+Per ciascuno dei seguenti blocchi da eseguire, si intuisca quali danno errore e quali no, e di quelli che non devono ritornare errore, quale sia il risultato atteso. Di quelli che ritornano errore, si definisca il perché. Si usi il framework per verificare. In caso di non consistenza con i risultati attesi, si interpelli il docente.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione ed assegnamento di variabili}
+\begin{verbatim}
+int i;
+i = 0;
+print(i+"");
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int i;
+i = 1.1;
+print(i+"");
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int i;
+print(i+"");
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int i;
+i = fi();
+print(i+"");
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione ed assegnamento di variabili}
+\scriptsize
+\begin{verbatim}
+double i;
+i = 0;
+print(i+""); // Perché non 0?
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int i;
+i = fd();
+print(i+"");
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+boolean i;
+i = fb() ^ i;
+print(i+"");
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int x;
+int y = 9;
+x = 10 - (y=(y-2)); // Che brutta cosa! Don't try this at home ;)
+print("x = " + x + ", y = " + y);
+\end{verbatim}
+\normalsize
+Si riscriva l'ultimo caso in maniera tale che le operazioni siano eseguite in statement separati.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operatore di incremento}
+In Java (come in C), un valore \texttt{int} (o \texttt{long}) può essere incrementato in tre  modi differenti. Si consideri la dichiarazione di variabile \texttt{int i = 0;}:
+\begin{itemize}
+ \item \texttt{i++}: prima valuta il valore di i, quindi lo incrementa.
+ \item \texttt{++i}: prima incrementa il valore di i, quindi lo valuta.
+ \item \texttt{i+1}: non modifica il valore di i, ma valuta la somma.
+\end{itemize}
+\emph{ATTENZIONE}! Queste tre forme, sebbene svolgano una funzione analoga, sono \textbf{diverse}!
+
+Considerando la seguente funzione:
+\begin{verbatim}
+int f(int i){
+   return i;
+}
+\end{verbatim}
+Per ciascuno dei blocchi della slide seguente, si preveda l'output del programma. Si verifichi con il framework, quindi si interpelli il docente se il risultato è diverso da quanto previsto.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operatore di incremento}
+\scriptsize
+\begin{verbatim}
+int a = 0;
+int b = f(a+1);
+print("a = " + a + ", b = " + b);
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int a = 0;
+int b = f(a++);
+print("a = " + a + ", b = " + b);
+\end{verbatim}
+\line(1,0){250}
+\begin{verbatim}
+int a = 0;
+int b = f(++a);
+print("a = " + a + ", b = " + b);
+\end{verbatim}
+Si costruiscano gli esempi analoghi per l'operatore di decremento, si preveda e si verifichi il loro funzionamento.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costrutto \texttt{if}}
+Il costrutto \texttt{if} consente di effettuare una serie di operazioni solo a patto che una certa espressione booleana sia vera.
+\scriptsize
+\begin{verbatim}
+boolean f(int[] a, int n){
+   if(a.length < 1) {
+      return false;
+   }
+   return f(a, n, 0);
+
+}
+boolean f(int[] a, int n, int i){
+   if(i >= a.length) {
+      return false;
+   }
+   if(a[i] == n){
+      return true;
+   }
+   return f(a, n, i+1);
+}
+\end{verbatim}
+\normalsize
+\begin{itemize}
+ \item Cosa realizza la funzione \texttt{f(int[], int)} qui sopra?
+ \item Dopo averlo capito, effettuare una serie di prove con il framework per verificare. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costrutto \texttt{if - else}}
+Il costrutto \texttt{else} può essere utilizzato, dopo un \texttt{if}, per stabilire una parte di codice da eseguire \textbf{solo se} la condizione dell'\texttt{if} è falsa. è anche possibile utilizzare else if, per verificare ulteriori condizioni solo se il controllo degli if precedenti l'else sono falliti.
+\scriptsize
+\begin{verbatim}
+int f(int[] a) {
+   return f(a, 0, 0);
+}
+int f(int[] a, int i, int s) {
+   if (i >= a.length) {
+      return s;
+   }
+   if (a[i] == 0) {
+      s = 0;
+   } else if (a[i] % 2 == 0) {
+      s++;
+   } else {
+      s--;
+   }
+   return f(a, i + 1, s);
+}
+\end{verbatim}
+\normalsize
+\begin{itemize}
+ \item Cosa realizza la funzione \texttt{f(int[])} qui sopra?
+ \item Dopo averlo capito, effettuare una serie di prove con il framework per verificare. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costrutto \texttt{for}}
+Il costrutto \texttt{for} consente di effettuare iterativamente delle operazioni fintanto che una condizione booleana è soddisfatta. Inoltre, consente di definire una operazione preliminare, ed una operazione da effettuare al termine di ciascuna iterazione.
+\scriptsize
+\begin{verbatim}
+int f(int[] a) {
+   int s = 0;
+   for (int i = 0; i < a.length; i++) {
+      if (a[i] % 2 == 0) {
+         s = s + a[i];
+      }
+   }
+   return s;
+}
+\end{verbatim}
+\normalsize
+\begin{itemize}
+ \item Cosa realizza la funzione \texttt{f(int[])} qui sopra?
+ \item Quante iterazioni vengono effettuate quando si invoca \texttt{f(new int[]\{2,1,5,9,7,3,5,154\})}? Quante volte viene testata la condizione del for?
+ \item Dopo averlo capito, effettuare una serie di prove con il framework per verificare. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Analisi di funzioni date}
+Controllando ad occhio il codice delle seguenti funzioni, intuire quale algoritmo implementano, e solo dopo verificare utilizzando il framework il loro funzionamento, facendo qualche prova.
+\begin{verbatim}
+double f1(int[] a ){
+   int acc = 0;
+   for (int i=0;i<a.length;i++) {
+      acc += a[i]; /* Operatore di incremento!
+         Sarebbe meglio non usarlo normalmente. */
+   }
+   return (double) acc / a.length;
+}
+\end{verbatim}
+\begin{itemize}
+ \item Quale informazione si vuole avere sull'array in input?
+ \item Perché si effettua un'operazione di cast prima di ritornare il risultato?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Analisi di funzioni date}
+\begin{verbatim}
+boolean f2(int[] a) {
+   int i = 0;
+   for (; i < a.length && a[i] == 1; i++);
+   return i == a.length;
+}
+\end{verbatim}
+\begin{itemize}
+ \item Quale grammatica riconosce?
+ \item Perché \texttt{int i = 0} non è dichiarata come prima istruzione del \texttt{for}?
+ \item Qual è il significato del controllo finale?
+ \item Quante cicli vengono effettuati all'interno del \texttt{for} se viene invocata \texttt{f2(new int[]\{1,1,1,1,1,1,0,1,1,2\})}?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Analisi di funzioni date}
+\begin{verbatim}
+int f3(int[] a) {
+   int count = 0;
+   for (int i = a.length - 1; i>=0; i--){
+      if (a[i]>0) {
+         count++;
+      }
+   }
+   return count;
+}
+\end{verbatim}
+\begin{itemize}
+ \item Si esegua passo-passo su carta l'invocazione \texttt{f3(new int[]\{-5,-7,5,4,3\})}
+ \item Quale funzione è realizzata?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Come si crea una funzione?}
+\small
+Non esiste (in generale) un metodo meccanico che vi consenta di realizzare l'algoritmo che desiderate. Esiste però una serie di operazioni che potete effettuare per semplificare la creazione di nuove funzioni.
+\begin{enumerate}
+ \item Resistete all'istinto di scrivere subito il codice: i linguaggi di programmazione (tutti), sono meno malleabili del linguaggio naturale. Se partite scrivendo subito codice, alla difficoltà dello studio dell'algoritmo si aggiunge quella del linguaggio.
+ \item Capite con molta attenzione cosa vi viene richiesto per risolvere il problema. Accertatevene anche osservando l'eventuale test, o scrivendone uno se non viene fornito. Per ciascun possibile input della funzione, dovete essere in grado di associare un output.
+ \item Ragionate sul procedimento mentale che vi porta risolvere il problema, cercando di estrarre, sempre in linguaggio naturale, i passi che vi portano dall'input all'output.
+ \item Una volta ottenuto l'algoritmo in linguaggio naturale, lo si deve tradurre in Java.
+ \item A questo punto, in caso di errori, di esecuzione, si deve eseguire passo-passo su carta ciò che si è realizzato, cercando di capire quando il risultato diverge da quanto atteso.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esempio di algoritmo in linguaggio naturale}
+L'algoritmo in linguaggio naturale non potrà esser dato in pasto ad una macchina, ma una volta scritto deve consentire a qualunque essere umano, dato un input, di ottenere il vostro stesso output.
+\begin{itemize}
+ \item Esempio di come potrebbe apparire un algoritmo in linguaggio naturale:
+\begin{enumerate}
+ \item Dato un array, lo scorro fintanto che vedo ``1'' oppure ``2'',
+ \item una volta terminato, verifico che vi sia un altro valore, che deve essere ``3'', e deve essere l'ultimo elemento dell'array. Se è così, torno vero.
+ \item se non è così, allora torno falso.
+\end{enumerate}
+ \item Quale grammatica riconosce?
+ \item Lo si traduca dal linguaggio naturale a Java.
+ \item Si mostri al docente il risultato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione guidata di funzioni}
+Si desidera costruire il riconoscitore per la grammatica 0\{1\}. Un possibile algoritmo in linguaggio naturale potrebbe essere:
+\begin{enumerate}
+ \item Dato un array, verifico che abbia almeno un elemento, e che il primo elemento sia zero. Se non è così, torno falso.
+ \item Se è così, scorro l'array a partire dal secondo elemento, e proseguo fintanto che vedo degli ``1''.
+ \item Se, quando ho finito di scorrere, ho analizzato tutti gli elementi dell'array, torno true. Altrimenti torno false.
+\end{enumerate}
+\begin{itemize}
+ \item Si costruisca la funzione Java corrispondente.
+ \item Si scriva una funzione di test che ne verifichi il corretto comportamento.
+ \item Si mostri al docente il risultato.
+ \item Analogamente, si costruisca il riconoscitore per la grammatica 0\{1\}2 e si scriva un test. Si mostri al docente il risultato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creazione di una funzione}
+Si desidera costruire una funzione che, dato un array \texttt{a} ed un intero \texttt{k}, calcoli la somma degli ultimi \texttt{k} valori di \texttt{a}.
+\begin{itemize}
+ \item Si scriva in linguaggio naturale un algoritmo che risolve il problema.
+ \item Si mostri al docente l'algoritmo.
+ \item Si costruisca la funzione Java corrispondente.
+ \item Si scriva una funzione di test che ne verifichi il corretto comportamento.
+ \item Si mostri al docente il risultato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Al termine dell'esercitazione}
+\begin{itemize}
+ \item Ricordarsi di effettuare il logout
+  \begin{itemize}
+    \item Dal menu Start, selezionare ``Disconnetti''
+  \end{itemize}
+ \item Una volta disconnessi:
+  \begin{itemize}
+    \item Se siete del primo turno, lasciate le macchine accese, di modo che i vostri colleghi del turno successivo siano agevolati
+    \item Se siete del secondo turno, spegnete le macchine
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+
