@@ -1,0 +1,240 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 4 \\ Programmazione strutturata}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e4}
+ \item Scaricare l'esercitazione odierna
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verifica del funzionamento del Framework F-S}
+\begin{itemize}
+ \item Sul desktop, troverete la cartella ``framework''
+ \item Fate doppio click sulla cartella
+ \item Si aprirà una nuova finestra, all'interno della quale troverete tre software
+ \item Fare doppio click sull'icona del FrameworkFS
+ \item Inserire nel campo ``Blocco da eseguire'' il testo \texttt{println(\textquotedbl{}Hello World\textquotedbl{});}
+ \item Premere il tasto ``Esecuzione''
+ \item Verificare che il risultato sia ``\texttt{Hello World}''
+ \item In caso di risultato diverso dalle attese, chiamare subito il docente o il tutor
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Come comportarsi di fronte agli errori}
+\begin{itemize}
+ \item Errare humanum est
+  \begin{itemize}
+    \item Ed è anche molto meglio sbagliare in laboratorio che all'esame!
+  \end{itemize}
+ \item È importante, di fronte agli errori, non scoraggiarsi, leggere \textbf{attentamente} il messaggio di errore, \textbf{capirlo} e studiare una contromisura.
+ \item Java segnala gli errori in maniera piuttosto precisa...
+ \item ...il framework, che ne usa una sottoparte molto ristretta, molto meno!
+ \item In caso di errore, il framework vi mostrerà un messaggio che spiega cosa (il compilatore pensa che) sia successo, seguito dal codice Java reale che è stato invocato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Istruzioni di questa esercitazione}
+In questo laboratorio useremo quello che abbiamo imparato nel precedente. Sfrutteremo le nozioni di programmazione strutturata per costruire funzioni che risolvono problemi più complicati. Per ogni esercizio proposto, salvo diversa consegna, è \textbf{obbligatorio} eseguire, nell'ordine:
+\begin{enumerate}
+ \item Scrittura di un test che dimostri che avete compreso il problema da risolvere
+ \item Scrittura di una strategia risolutiva in linguaggio naturale
+ \item Se non si è certi di aver in mano una strategia corretta, interpellare il docente per avere un riscontro
+ \item Tradurre la strategia in Java all'interno del framework F-S
+ \item Interpellare il docente per commenti sul codice scritto
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esempio per la grammatica \{1\}\{2|3\}}
+\begin{block}{Descrizione in linguaggio naturale}
+\begin{enumerate}
+ \item Fintanto che trovo una sequenza di uno, vado avanti nell'array
+ \item Fintanto che trovo dei due o dei tre, vado avanti nell'array
+ \item Verifico di essere arrivato in fondo
+\end{enumerate}
+\end{block}
+\begin{block}{Possibile test}
+\scriptsize
+ \begin{verbatim}
+boolean test(){
+   return f(new int[]{}) && 
+   f(new int[]{1,2,3}) && 
+   f(new int[]{1,1,1,1,1,1}) && 
+   f(new int[]{2,3,2,2,2,2,3}) && 
+   f(new int[]{1,2}) && 
+   !f(new int[]{1,2,3,1}) && 
+   !f(new int[]{2,3,5}) && 
+   !f(new int[]{1,1,1,5,2,3,3}) && 
+   !f(new int[]{0,1});
+}
+ \end{verbatim}
+ \normalsize
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esempio per la grammatica \{1\}\{2|3\}}
+\begin{block}{Traduzione in Java}
+ \begin{verbatim}
+boolean f(int[] a){
+   int i = 0;
+   /* Fintanto che trovo una sequenza di uno,
+      vado avanti nell'array */
+   for(; i < a.length && a[i] == 1; i++);
+   /* Fintanto che trovo dei due o dei tre,
+      vado avanti nell'array */
+   for(; i < a.length && (a[i] == 2 || a[i] == 3); i++);
+   /* Verifico di essere arrivato in fondo */
+   return i == a.length;
+}
+ \end{verbatim}
+\end{block}
+Si risolve in tre righe!
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Riconoscitori di grammatiche}
+\begin{itemize}
+ \item 5\{1|2|3|4\}5
+ \item \{1 2 | 1 3\}
+  \begin{itemize}
+  \item \texttt{\{1,2,1,2,1,3\}} $\Rightarrow$ \texttt{true}
+  \item \texttt{\{1,3\}} $\Rightarrow$ \texttt{true}
+  \item \texttt{\{\}} $\Rightarrow$ \texttt{true}
+  \item \texttt{\{0,1,2\}} $\Rightarrow$ \texttt{false}
+  \item \texttt{\{12,13,12\}} $\Rightarrow$ \texttt{false}
+  \item \texttt{\{12\}} $\Rightarrow$ \texttt{false}
+  \end{itemize}
+ \item $1^n$ 3 $2^n$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Riconoscitore di ordinamento}
+ si realizzi la funzione \texttt{boolean grows(int[])}, che torna true se l'array è ordinato in maniera crescente. Alcuni esempi:
+\begin{itemize}
+ \item \texttt{\{0,1,2,3,4\}} $\Rightarrow$ \texttt{true}
+ \item \texttt{\{4,4,4,4,4\}} $\Rightarrow$ \texttt{true}
+ \item \texttt{\{\}} $\Rightarrow$ \texttt{true}
+ \item \texttt{\{1,0,2,3,4\}} $\Rightarrow$ \texttt{false}
+ \item \texttt{\{-1,0,2,3,4\}} $\Rightarrow$ \texttt{true}
+ \item \texttt{\{-1,0,2,3,2\}} $\Rightarrow$ \texttt{false}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Prodotto scalare}
+ si realizzi la funzione \texttt{double dotProduct(double[], double[])}, che dati due array di double di pari lunghezza calcola analiticamente il loro prodotto scalare. Alcuni esempi:
+\begin{itemize}
+ \item \texttt{\{0.5,0.6,0.9\}, \{0.5,0.6,0.9\}} $\Rightarrow$ \texttt{1.42}
+ \item \texttt{\{4,4,4,4,4\}, \{1,2,3,4,5\}} $\Rightarrow$ \texttt{60}
+ \item \texttt{\{\}, \{\}} $\Rightarrow$ \texttt{0}
+ \item \texttt{\{10\}, \{10\}} $\Rightarrow$ \texttt{100}
+ \item \texttt{\{10\}, \{10, 20\}} $\Rightarrow$ \texttt{0}
+\end{itemize}
+Ossia, il risultato $r$, dati due array $a$ e $b$ lunghi $length$, è:
+$$
+r = \sum_{i=0}^{length-1}{a[i]b[i]}
+$$
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Normalizzatore}
+ Si realizzi la funzione \texttt{double normalise(int[])}, che dato un array, calcola il valor medio diviso la differenza fra il valore massimo ed il valore minimo. Il risultato deve essere preciso. Alcuni esempi:
+\begin{itemize}
+ \item \texttt{\{0,1,2,3,4\}} $\Rightarrow$ \texttt{0.5}
+ \item \texttt{\{4,4,4,4,4\}} $\Rightarrow$ \texttt{1}
+ \item \texttt{\{\}} $\Rightarrow$ \texttt{0}
+ \item \texttt{\{1,10,21,3,4\}} $\Rightarrow$ \texttt{0.39}
+\end{itemize}
+Ossia, risultato $r$, dato un array $a$ lungo $a.length$, è:
+$$
+r = \frac{\frac{\sum_{i=0}^{a.length-1}a[i]}{a.length}}{max(a)-min(a)}
+$$
+Se $max(a) > min(a)$, 1 altrimenti.
+
+Suggerimento: nonostante la soluzione ottima sia realizzabile scorrendo l'array una sola volta (un solo ciclo \texttt{for}), l'esercizio si risolve più facilmente se si realizzano separatamente le funzioni che calcolano il minimo ed il massimo di un array.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esercizi aggiuntivi}
+Chi termina in anticipo i sei esercizi proposti, può accedere agli esercizi opzionali che seguono.
+
+La difficoltà alcuni di questi è superiore a quelli d'esame. In ogni caso, se riuscite a risolverli agevolmente, siete ad un ottimo livello!
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esercizi aggiuntivi: grammatiche}
+\begin{itemize}
+ \item \{0[1]\}0
+ \item \{2\}3
+ \item \{2\}3\{2\}
+ \item 5\{1\{2|3\}4\}5
+ \item $1^n$ $2^n$
+ \item $1^n$ 3 $2^{2n}$
+ \item $1^n$ 3 $2^n$ 4 $5^n$
+ \item $1^n$ 3 \{$2^n$\} 4 [$5^n$]
+ \item \{$1^n$ $2^n$\}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni su array e numeri}
+\begin{itemize}
+ \item \texttt{double avgFromTo(int[], int, int)}: calcola la media esatta dei valori di un array all'interno di un intervallo.
+ \item \texttt{int max(int[])}: calcola il massimo valore dell'array.
+ \item \texttt{boolean ballot(boolean[])}: torna true se l'array contiene più valori true che false, false altrimenti.
+ \item \texttt{boolean isPrime(int)}: torna true se il numero in ingresso è primo.
+ \item \texttt{int nextPrime(int)}: torna il numero primo successivo a quello dato. È consentito l'uso di \texttt{boolean isPrime(int)} realizzata in precedenza.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Al termine dell'esercitazione}
+\begin{itemize}
+ \item Ricordarsi di effettuare il logout
+  \begin{itemize}
+    \item Dal menu Start, selezionare ``Disconnetti''
+  \end{itemize}
+ \item Una volta disconnessi:
+  \begin{itemize}
+    \item Se siete del primo turno, lasciate le macchine accese, di modo che i vostri colleghi del turno successivo siano agevolati
+    \item Se siete del secondo turno, spegnete le macchine
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+
