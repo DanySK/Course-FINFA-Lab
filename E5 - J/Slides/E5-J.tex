@@ -1,0 +1,403 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 5 \\ Programmazione in Java static}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+    \item Speriamo che oggi funzioni :)
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e5}
+ \item Scaricare l'esercitazione odierna
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e5-sources}
+ \item Scaricare il file tar.gz contenente i sorgenti
+ \item Decompattare l'archivio sul Desktop
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Elementi base del file system}
+\begin{itemize}
+ \item I sistemi operativi odierni consentono di memorizzare permanentemente le informazioni su supporti di memorizzazione di massa (dischi magnetici, dispositivi a stato solido), unità ottiche (CD, DVD, Blu-Ray), memory stick, ecc...
+ \item Le informazioni su questi supporti sono organizzate in files e cartelle:
+  \begin{itemize}
+    \item i files contengono le informazioni;
+    \item le cartelle sono contenitori, all'interno contengono i files ed altre cartelle.
+  \end{itemize}
+ \item La cartella più esterna, che contiene tutte le altre, è detta root. Essa è il livello gerarchico più alto nel file system.
+  \begin{itemize}
+    \item In Windows, ciascun file system ha come root una lettera di unità (e.g. \texttt{C:}, \texttt{D:}).
+    \item In Unix (Linux, Mac OS, BSD, Solaris, etc), vi è una unica radice, ossia \texttt{/}
+  \end{itemize}
+ \item La stringa che descrive un intero percorso dalla root fino ad un elemento del file system prende il nome di directory (e.g. \texttt{C:\textbackslash{}Windows\textbackslash{}win32.dll}, \texttt{/home/user/frameworkFS.jar})
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Manipolare il file system}
+L'utente può osservare e manipolare il file system:
+\begin{itemize}
+ \item sapere quali files e cartelle contiene una cartella
+ \item creare nuovi files e cartelle
+ \item spostare file e cartelle dentro altre cartelle
+ \item rinominare files e cartelle
+ \item eliminare files e cartelle
+\end{itemize}
+Il software deputato ad osservare e manipolare il file system prende il nome di file manager.
+\begin{itemize}
+ \item Su Windows, esso è ``Esplora risorse'' (\texttt{explorer.exe})
+ \item Su MacOS, il principale è ``Finder''
+ \item Su Linux (e Android) ne esistono diversi (Nautilus, Dolphin, Thunar, Astro...)
+\end{itemize}
+Provate ad effettuare le seguenti operazioni:
+\begin{enumerate}
+ \item Creare due cartelle, di nome \texttt{f1} ed \texttt{f2}
+ \item Rinominare \texttt{f2} in \texttt{f12}
+ \item Spostare \texttt{f12} dentro \texttt{f1}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Il terminale}
+Il terminale consente di impartire comandi al computer tramite testo.
+\begin{itemize}
+ \item Nell'antichità (in termini informatici) le interfacce grafiche erano sostanzialmente inesistenti, e l'interazione con i calcolatori avveniva di norma tramite interfaccia testuale
+ \item Tutt'oggi, le interfacce testuali sono utilizzate:
+\begin{itemize}
+ \item è spesso più veloce eseguire un comando che effettuare operazioni con il mouse
+ \item operazioni complesse possono esser svolte con comandi semplici
+ \item non tutti i software sono dotati di interfaccia grafica
+ \item alcune opzioni di configurazione del sistema operativo restano accessibili solo via linea di comando
+\begin{itemize}
+ \item (anche su Windows: ad esempio il comando ``magico'' che cambia l'associazione dei file jar e vi fa funzionare il framework)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Struttura di un comando}
+\begin{block}{Tutti i comandi condividono una struttura comune}
+\texttt{commandName parameters arguments} 
+\end{block}
+\begin{itemize}
+ \item Solitamente i parametri vengono prefissi da un simbolo \texttt{-} o \texttt{-{}-}, o (in ambiente Windows) \texttt{/}
+\end{itemize}
+\begin{block}{Alcuni esempi}
+\texttt{java -jar frameworkFS.jar} 
+\scriptsize
+\begin{itemize}
+ \item \textbf{Cosa fa?} Avvia una macchina virtuale java, chiedendo l'esecuzione del file ``frameworkFS.jar''
+ \item \textbf{Nome comando:} \texttt{java}
+ \item \textbf{Parametri:} \texttt{-jar}
+ \item \textbf{Argomenti:} \texttt{frameworkFS.jar}
+\end{itemize}
+\normalsize
+\texttt{rm -r -f /home/user/uselessData /home/user/other} 
+\scriptsize
+\begin{itemize}
+ \item \textbf{Cosa fa?} Rimuove le directory \texttt{/home/user/uselessData} e \texttt{/home/user/other}, tutte le cartelle in esse contenute e tutti i file in esse contenute.
+ \item \textbf{Nome comando:} \texttt{rm} (sta per remove)
+ \item \textbf{Parametri:} \texttt{-f} (sta per ``force''), \texttt{-r} (sta per ``recursive'')
+ \item \textbf{Argomenti:} \texttt{/home/user/uselessData}, \texttt{/home/user/other}
+\end{itemize}
+\end{block}
+\normalsize
+\end{frame}
+
+\begin{frame}[fragile]
+\label{slide:commands}
+\frametitle{Manipolare il file system dal terminale}
+\begin{center}
+  \begin{tabular}{| l | c | c |}
+    \hline
+    \textbf{Operazione} & \textbf{Comando Unix} & \textbf{Comando Win} \\ \hline
+    \scriptsize{}Visualizzare la directoy corrente & \texttt{pwd} & \texttt{echo \%cd\%}  \\ \hline
+    \scriptsize{}Eliminare il file \texttt{f} & \texttt{rm f} & \texttt{del f} \\ \hline
+    \scriptsize{}Eliminare la directory \texttt{nd} & \texttt{rm -r nd} & \texttt{rd nd} \\ \hline
+    \scriptsize{}Contenuto della directory corrente & \texttt{ls -l} & \texttt{dir} \\ \hline
+    \scriptsize{}Avviare un eseguibile \texttt{p} & \texttt{./p} & \texttt{.\textbackslash{}p} \\ \hline
+    \scriptsize{}Cambiare unità disco (passare a D:) & -- & \texttt{D:} \\ \hline
+    \scriptsize{}Passare alla directory \texttt{nd} & \texttt{cd nd} & \texttt{cd nd} \\ \hline
+    \scriptsize{}Passare alla directory di livello superiore & \texttt{cd ..} & \texttt{cd..} \\ \hline
+    \scriptsize{}Spostare un file \texttt{f1} in \texttt{f2} & \texttt{mv f1 f2} & \texttt{move f1 f2} \\ \hline
+    \scriptsize{}Copiare il file \texttt{f} in \texttt{fc} & \texttt{cp f fc} & \texttt{copy f fc} \\ \hline
+    \scriptsize{}Creare la directory \texttt{d} & \texttt{mkdir d} & \texttt{md d} \\ \hline
+  \end{tabular}
+\end{center}
+Eseguire delle prove ed esser certi di aver compreso come utilizzare \emph{ogni} comando. Per \emph{cominciare} l'esame, infatti, dovrete essere in grado di manipolare il file system.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Piccole furberie da terminale}
+\begin{block}{Autocompletamento}
+\scriptsize{}
+Sia Unix che Windows offrono la possibilità di effettuare autocompletamento, ossia chiedere al sistema di provare a completare un comando. Per farlo si utilizza il tasto ``tab'' (quello con due frecce orientate in maniera opposta, sopra il lucchetto). Si testi la funzione di autocompletamento sul proprio sistema operativo.
+\end{block}
+\begin{block}{Memoria dei comandi precendenti}
+\scriptsize{}
+Sia Unix che Windows offrono la possibilità di richiamare rapidamente i comandi inviati precedentemente premendo il tasto ``freccia su''. I sistemi Unix supportano anche il lancio di comandi eseguiti in sessioni precedenti (se inviate un comando e riavviate il sistema, e al riavvio premete ``freccia su'', vi apparirà il comando precedente. 
+\end{block}
+% \begin{block}{Ricerca nella storia dei comandi precedenti}
+% \scriptsize{}
+% Premendo ctrl+r seguito da un testo da cercare, i sistemi Unix supportano la ricerca all'interno dei comandi lanciati recentemente.
+% \end{block}
+\begin{block}{Interruzione di un programma}
+\scriptsize{}
+È possibile interrompere forzatamente un programma (ad esempio perché inloopato). Per farlo, sia su Windows che in Unix, si prema ctrl+c.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Utilizzo di \texttt{javac}}
+\texttt{javac} è il compilatore Java. Consente di tradurre un file di testo che contiene codice Java (tipicamente con estensione \texttt{.java}) in un file interpretabile dalla Java Virtual Machine (estensione \texttt{.class})
+\begin{block}{Esempio d'uso}
+\begin{enumerate}
+ \item Si apra un terminale
+ \item Utilizzando il comando \texttt{cd} come descritto nella Slide \ref{slide:commands}, ci si posizioni nella cartella nella quale si è decompattato l'archivio
+ \item Utilizzando il comando \texttt{dir} (o \texttt{ls}, per chi usa Unix) come descritto nella Slide \ref{slide:commands}, si verifichi che la cartella contenga un insieme di files con estensione \texttt{.java}
+ \item Si lanci il comando \texttt{javac Empty.java}
+ \item Si verifichi che un file .class è stato creato nella cartella medesima
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Utilizzo di \texttt{java}}
+Una volta che il software è stato compilato, può essere eseguito. Per eseguire un software Java, si invoca il comando \texttt{java}, che crea una istanza della Java Virtual Machine e le dà in pasto ciò che si desidera eseguire.
+\begin{block}{Esempio d'uso}
+\begin{enumerate}
+ \item Utilizzando il terminale precedente
+ \item Si lanci il comando \texttt{java Empty}
+ \begin{itemize}
+  \item Chiede a Java di eseguire, se possibile, la classe \texttt{Empty}
+ \end{itemize}
+ \item Si ottiene un errore: lo si legga attentamente. Cosa significa?
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Utilizzo di \texttt{java} - funzione \texttt{main}}
+\begin{block}{Come fa la JVM a capire COSA eseguire?}
+\begin{itemize}
+ \item Un programma può contare di centinaia (ma anche migliaia, milioni) di funzioni. Come fa la Java Virtual Machine a capire cosa eseguire, ed in che ordine?
+ \item La funzione che viene invocata è \texttt{static void main(String[])}
+ \begin{itemize}
+  \item funzione di nome \texttt{main}
+  \item non ha alcun ritorno
+  \item prende in ingresso un array di \texttt{String}. Al momento dell'invocazione, gli argomenti passati al comando java dopo il primo (ossia, passati dopo la classe da eseguire) vengono inseriti nell'array di String e passati alla funzione \texttt{main}, che può eventualmente utilizzarli
+ \end{itemize}
+ \item Quando si lancia \texttt{java ClassName}, quello che accade è che la JVM cerca la classe \texttt{ClassName}, cerca al suo interno la funzione \texttt{main}, quindi la esegue.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Scegliere un editor}
+A partire da questo laboratorio, si fa sul serio. Scriveremo finalmente dei programmi veri, fuori dall'ambiente limitante dei framework. Chiunque debba scrivere del codice, ha bisogno di un buon editor di testo. Alcune dei desiderata per un buon editor:
+\scriptsize{}
+ \begin{itemize}
+    \item Code highlighting: la capacità di evidenziare in maniera chiara le diverse parti di codice. Aiuta chi legge a capire cosa ci sia scritto.
+    \item Code suggestions: la capacità di completare automaticamente nomi parzialmente scritti. Velocizza drammaticamente la scrittura e previene errori di typing.
+    \item Supporto a differenti linguaggi: a volte uno stesso software è scritto con una combinazione di linguaggi. Un editor che è in grado di distinguere i diversi sorgenti e applicare il code highlighting correttamente a ciascun linguaggio può essere utilizzato per l'intero progetto.
+    \item Possibilità di vedere e lavorare contemporaneamente più sorgenti.
+    \item Funzionalità ancora più avanzate (organizzare i sorgenti, compilare automaticamente, eseguire dei test in modo automatizzato, etc.) consentono ad alcuni tool di passare da semplici editor di testo a veri e propri \textit{Source Development Kit} (SDK)
+ \end{itemize}
+\normalsize{}
+In questo corso, dato lo scopo di insegnarvi l'informatica di base, non vi è consentito l'uso di SDK: lavoreremo con degli editor, utilizzando i comandi da terminale per compiere operazioni di compilazione ed esecuzione. Chi vorrà approfondire, venga a seguire il corso di Object Oriented Programming ad Informatica :)
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Jedit}
+L'editor che abbiamo scelto per voi è JEdit, scritto interamente in Java.
+ \begin{itemize}
+%     \item Vi è consentito comunque l'uso anche di altri software, a patto che prima li mostriate al docente, che verificherà se non abbiano strumenti facilitativi eccessivi
+%     \item Altri software che potete usare liberamente:
+%  \begin{itemize}
+%     \item Kwrite
+%     \item Gedit
+%     \item Kate
+%     \item Notepad++
+%  \end{itemize}
+ \item Interamente scritto in Java
+ \item Supporta il code highlighting sia per Java che per C
+ \item Consente di lavorare su più sorgenti contemporaneamente
+ \item Esistono editor anche più avanzati, ma vi consigliamo Jedit
+ \begin{itemize}
+ \item Anche perché all'esame, comunque, lo useremo
+ \end{itemize}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Compilare ed eseguire un programma Java}
+\begin{block}{Utilizzare JEdit per vedere il contenuto di un sorgente}
+\begin{enumerate}
+ \item Aprite JEdit
+ \item Aprite in JEdit il file \texttt{ArgumentEcho.java} che si trova nella cartella dove avete scompattato i sorgenti
+ \item Osservate il codice: cosa realizza?
+ \item Utilizzando il comando \texttt{javac} adeguatamente, compilate il file
+ \item Utilizzando il comando \texttt{java} adeguatamente, eseguite il programma
+ \item Cosa succede se eseguite il seguente comando?
+ \begin{itemize}
+  \item \texttt{java ArgumentEcho I love this course}
+ \end{itemize}
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruire un programma Java data una funzione}
+Si sconsideri la seguente funzione:
+\scriptsize{}
+\begin{verbatim}
+  static boolean isPrime(int n) {
+    if (n == 2) {
+      return true;
+    }
+    if (n < 2 || n % 2 == 0) {
+      return false;
+    }
+    int i = 3;
+    for (; i < n / 2 && n % i != 0; i+=2);
+    return i == n/2 || i == n/2 + 1;
+  }\end{verbatim}
+\begin{enumerate}
+ \item Si crei un nuovo file \texttt{PrimeDetector.java}
+ \item All'interno di \texttt{PrimeDetector.java}, si incolli la funzione data
+ \item Si scriva un test per la funzione \texttt{isPrime(int)}
+ \item Si scriva un main che esegua il test
+ \item Si compili il file \texttt{PrimeDetector.java}
+ \item Si esegua il programma
+ \item Considerando la funzione (esistente in Java) \texttt{int Integer.parseInt(String)} che, data una String con caratteri numerici (e.g. \texttt{\textquotedbl{}123\textquotedbl{}}, torna la sua rappresentazione come \texttt{int}, si modifichi il main per far sì che verifichi che il software verifichi e stampi a video se il primo argomento passato sia un primo o meno.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni di libreria: da \texttt{String} a tipo primitivo}
+Di seguito verranno elencate delle funzioni di libreria Java che consentono di tradurre un valore in formato Stringa in un tipo di dato diverso
+\begin{itemize}
+ \item \texttt{boolean Boolean.parseBoolean(String)}
+ \item \texttt{double Double.parseDouble(String)}
+ \item \texttt{float Float.parseFloat(String)}
+ \item \texttt{int Integer.parseInt(String)}
+ \item \texttt{long Long.parseLong(String)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni di libreria: \texttt{Math}}
+Java offre un'ampia libreria con funzioni matematiche. È possibile computare (arco)seno, (ar)coseno, esponenziale, radici, elevamenti a potenza, logaritmi, numeri casuali, eccetera. Per una panoramica completa, si veda la pagina:
+
+\scriptsize{}
+\url{http://docs.oracle.com/javase/7/docs/api/java/lang/Math.html}
+
+\normalsize{}
+L'uso di queste funzioni è generalmente consentito
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funzioni di libreria: \texttt{Arrays}}
+Java offre alcune funzioni per manipolare gli array, all'interno della classe \texttt{Arrays}. Nel seguito, con \texttt{T[]} si indicherà un generico array. Le funzioni presentate sono infatti applicabili a qualunque tipo di array.
+\begin{itemize}
+ \item \texttt{boolean Arrays.equals(T[], T[])} -- Torna true se i due array hanno uguale contenuto (stessi elementi nelle stesse posizioni). 
+ \item \texttt{void Arrays.sort(T[])} -- Modifica l'array passato ordinandolo in maniera ascendente
+ \item \texttt{String Arrays.toString(T[])} -- Torna una rappresentazione in forma di stringa dell'array. Molto utile per visualizzare il contenuto degli array.
+\end{itemize}
+L'uso di queste funzioni è generalmente consentito
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Consegna dei prossimi esercizi}
+\begin{enumerate}
+ \item Si crei, per ciascun esercizio, un nuovo file \texttt{.java}
+ \item All'interno del file, si crei una classe con lo stesso nome del file
+ \item All'interno della classe, si implementi la funzione richiesta
+ \item Si scriva un test per la funzione
+ \item Si scriva un main che esegue il test e ne stampa il risultato
+ \item Una volta realizzato il main, se richiesto nell'esercizio, si aggiunga al main la gestione degli argomenti passati dall'utente
+ \item Si mostri il risultato al docente
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{RandomArray}
+Si crei il programma \texttt{RandomArray}, che, dato un numero intero \texttt{n} crea un array di \texttt{int} di lunghezza \texttt{n} e lo riempie con valori casuali compresi fra 0 e 1000, quindi lo mostra a video. Si ricorda che:
+\begin{itemize}
+ \item la funzione \texttt{double Math.random()} torna un numero casuale compreso fra 0 ed 1. Questo può essere opportunamente trasformato in un numero casuale fra 0 e 1000.
+ \item la funzione \texttt{String Arrays.toString(int[])} torna una rappresentazione come \texttt{String} del contenuto dell'array
+\end{itemize}
+Si modifichi il programma affinché:
+\begin{itemize}
+ \item Se viene passato un argomento, esso deve essere \texttt{n}
+ \item Se non viene passato alcun argomento, viene assunto \texttt{n = 10}
+\end{itemize}
+Per questo peculiare programma non è necessario scrivere un test.
+\end{frame}
+
+\begin{frame}
+\frametitle{Palindrome}
+Si crei il programma \texttt{Palindrome}, che, dato un numero intero \texttt{n}, crea un array di \texttt{int} che segue lo schema seguente:
+\begin{itemize}
+ \item 0 $\Rightarrow$ \{0\}
+ \item 1 $\Rightarrow$ \{1,0,1\}
+ \item 2 $\Rightarrow$ \{2,1,0,1,2\}
+ \item 5 $\Rightarrow$ \{5,4,3,2,1,0,1,2,3,4,5\}
+\end{itemize}
+Il programma deve essere realizzato in maniera \emph{iterativa}.
+Si modifichi il programma affinché:
+\begin{itemize}
+ \item Se viene passato un argomento, esso deve essere \texttt{n}
+ \item Se non viene passato alcun argomento, viene assunto \texttt{n = 0}
+ \item Si affianchi alla versione iterativa già realizzata una implementazione ricorsiva (ossia, si traduca la funzione realizzata in modo iterativo affinché usi la ricorsione).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{PushZeroes - opzionale}
+Si crei il programma \texttt{PushZeroes}, che, dato un \texttt{int[]}, crea un nuovo array nel quale ad ogni 1 segue uno 0. Alcuni esempi:
+\begin{itemize}
+ \item \{\} $\Rightarrow$ \{\}
+ \item \{1,1,1,1\} $\Rightarrow$ \{1,0,1,0,1,0\}
+ \item \{1,0,1\} $\Rightarrow$ \{1,0,1,0\}
+ \item \{1,0,1,0\} $\Rightarrow$ \{1,0,1,0\}
+ \item \{0,1,2,3\} $\Rightarrow$ \{0,1,0,2,3\}
+ \item \{2,3,4,5\} $\Rightarrow$ \{2,3,4,5\}
+\end{itemize}
+Se eseguito, il programma deve eseguire un test e stampare:
+\begin{enumerate}
+ \item Quali ingressi vengono dati alla funzione
+ \item Quale uscita dà la funzione
+ \item Il risultato del test (true o false)
+\end{enumerate}
+\end{frame}
+
+
+\end{document}
+
