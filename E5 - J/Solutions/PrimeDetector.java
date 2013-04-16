@@ -1,7 +1,7 @@
 class PrimeDetector {
 
   static boolean isPrime(int n) {
-    if (n == 2) {
+    if (n == 2 || n == 3) {
       return true;
     }
     if (n < 2 || n % 2 == 0) {

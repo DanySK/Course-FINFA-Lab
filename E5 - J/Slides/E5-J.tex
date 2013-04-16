@@ -33,9 +33,13 @@
  \item Aprire Google Chrome, o altro browser
  \item Collegarsi al sito \url{http://bit.ly/finfa2013-e5}
  \item Scaricare l'esercitazione odierna
- \item Collegarsi al sito \url{http://bit.ly/finfa2013-e5-sources}
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e5-zip}
  \item Scaricare il file tar.gz contenente i sorgenti
  \item Decompattare l'archivio sul Desktop
+  \begin{itemize}
+    \item In laboratorio, aperto lo zip, copiare e incollare i sorgenti sul desktop
+    \item Verrà utilizzato più avanti nell'esercitazione
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -73,7 +77,7 @@ Il software deputato ad osservare e manipolare il file system prende il nome di 
  \item Su MacOS, il principale è ``Finder''
  \item Su Linux (e Android) ne esistono diversi (Nautilus, Dolphin, Thunar, Astro...)
 \end{itemize}
-Provate ad effettuare le seguenti operazioni:
+Provate ad effettuare le seguenti operazioni (utilizzando il file manager):
 \begin{enumerate}
  \item Creare due cartelle, di nome \texttt{f1} ed \texttt{f2}
  \item Rinominare \texttt{f2} in \texttt{f12}
@@ -107,7 +111,7 @@ Il terminale consente di impartire comandi al computer tramite testo.
 \begin{itemize}
  \item Solitamente i parametri vengono prefissi da un simbolo \texttt{-} o \texttt{-{}-}, o (in ambiente Windows) \texttt{/}
 \end{itemize}
-\begin{block}{Alcuni esempi}
+\begin{block}{Alcuni esempi (da capire, non da eseguire!)}
 \texttt{java -jar frameworkFS.jar} 
 \scriptsize
 \begin{itemize}
@@ -130,6 +134,14 @@ Il terminale consente di impartire comandi al computer tramite testo.
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Aprire un terminale in laboratorio}
+\begin{itemize}
+ \item In laboratorio, troverete il terminale (prompt dei comandi) clickando su Start $\Rightarrow$ Programmi $\Rightarrow$ Accessori $\Rightarrow$ Prompt dei comandi
+ \item Metodo più rapido: Start  $\Rightarrow$ Nella barra di ricerca, digitare \texttt{cmd} $\Rightarrow$ clickare su \texttt{cmd.exe}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 \label{slide:commands}
 \frametitle{Manipolare il file system dal terminale}
 \begin{center}
@@ -137,7 +149,7 @@ Il terminale consente di impartire comandi al computer tramite testo.
     \hline
     \textbf{Operazione} & \textbf{Comando Unix} & \textbf{Comando Win} \\ \hline
     \scriptsize{}Visualizzare la directoy corrente & \texttt{pwd} & \texttt{echo \%cd\%}  \\ \hline
-    \scriptsize{}Eliminare il file \texttt{f} & \texttt{rm f} & \texttt{del f} \\ \hline
+    \scriptsize{}Eliminare il file \texttt{f} (non va con le cartelle!) & \texttt{rm f} & \texttt{del f} \\ \hline
     \scriptsize{}Eliminare la directory \texttt{nd} & \texttt{rm -r nd} & \texttt{rd nd} \\ \hline
     \scriptsize{}Contenuto della directory corrente & \texttt{ls -l} & \texttt{dir} \\ \hline
     \scriptsize{}Avviare un eseguibile \texttt{p} & \texttt{./p} & \texttt{.\textbackslash{}p} \\ \hline
@@ -149,7 +161,7 @@ Il terminale consente di impartire comandi al computer tramite testo.
     \scriptsize{}Creare la directory \texttt{d} & \texttt{mkdir d} & \texttt{md d} \\ \hline
   \end{tabular}
 \end{center}
-Eseguire delle prove ed esser certi di aver compreso come utilizzare \emph{ogni} comando. Per \emph{cominciare} l'esame, infatti, dovrete essere in grado di manipolare il file system.
+Eseguire delle prove ed esser certi di aver compreso come utilizzare ogni comando. Per \emph{cominciare} l'esame, in particolare, dovrete usare il comando \texttt{cd}: siate certi di aver capito cosa fa!
 \end{frame}
 
 \begin{frame}[fragile]
@@ -277,7 +289,7 @@ Si sconsideri la seguente funzione:
 \scriptsize{}
 \begin{verbatim}
   static boolean isPrime(int n) {
-    if (n == 2) {
+    if (n == 2 || n == 3) {
       return true;
     }
     if (n < 2 || n % 2 == 0) {
@@ -294,7 +306,7 @@ Si sconsideri la seguente funzione:
  \item Si scriva un main che esegua il test
  \item Si compili il file \texttt{PrimeDetector.java}
  \item Si esegua il programma
- \item Considerando la funzione (esistente in Java) \texttt{int Integer.parseInt(String)} che, data una String con caratteri numerici (e.g. \texttt{\textquotedbl{}123\textquotedbl{}}, torna la sua rappresentazione come \texttt{int}, si modifichi il main per far sì che verifichi che il software verifichi e stampi a video se il primo argomento passato sia un primo o meno.
+ \item Considerando la funzione (esistente in Java) \texttt{int Integer.parseInt(String)} che, data una String con caratteri numerici (e.g. \texttt{\textquotedbl{}123\textquotedbl{}}), torna la sua rappresentazione come \texttt{int}; si modifichi il main per far sì che verifichi che il software verifichi e stampi a video se il primo argomento passato sia un primo o meno.
 \end{enumerate}
 \end{frame}
 
