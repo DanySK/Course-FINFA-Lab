@@ -1,0 +1,178 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 7 \\ Rudimenti di C}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e7}
+ \item Scaricare il pacchetto \url{http://bit.ly/finfa2013-e7-code}
+ \item Scompattare il pacchetto in una cartella a piacimento: questa sarà la vostra directory di lavoro di oggi.
+ \item All'interno del pacchetto, troverete degli esempi di codice del prof. Viroli. Prendetevi del tempo per osservarli, cercate di capire cosa fanno, ed eventualmente utilizzateli come ispirazione per svolgere gli esercizi.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{compilazione di un file C}
+\begin{itemize}
+ \item Utilizzando il comando \texttt{gcc} visto a lezione, si compili il file \texttt{compile\_me.c}
+ \item \alert{Si consiglia di usare sempre l'opzione \texttt{-Wall}, per ricevere tutti i warning generati dal vostro programma.}
+ \item Utilizzando l'opzione \texttt{-o} del compilatore, si produca l'eseguibile \texttt{UselessProgram}
+ \item Si controlli il sorgente del programma prevedendo il suo funzionamento, e poi lo si esegua nel seguente modo:
+ \begin{itemize}
+  \item Sotto Windows, scrivendo una delle seguenti:
+  \begin{itemize}
+    \item UselessProgram.exe
+    \item UselessProgram
+    \item .\textbackslash{}UselessProgram
+    \item .\textbackslash{}UselessProgram.exe
+  \end{itemize}
+  \item Sotto UNIX (MacOS, Linux), scrivendo:
+  \begin{itemize}
+    \item ./UselessProgram
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{La tua nuova migliore amica: \texttt{void printf()}}
+\begin{itemize}
+ \item Si crei un nuovo file \texttt{helloworld.c}, il cui \texttt{main()} utilizzi la funzione \texttt{printf} per stampare a video la stringa ``Hello, world!'', quindi vada a capo.
+  \begin{itemize}
+    \item Si compili con il nome di \texttt{HelloWorld} e si esegua.
+  \end{itemize}
+ \item Si crei un nuovo file \texttt{evens.c}, il cui \texttt{main()} utilizzi la funzione \texttt{printf} per stampare a video i primi 500 numeri pari separati da uno spazio, quindi vada a capo.
+  \begin{itemize}
+    \item Si compili con il nome di \texttt{Evens} e si esegua.
+  \end{itemize}
+\end{itemize}
+Nota: per utilizzare la funzione \texttt{printf}, è necessario includere i prototipi delle funzioni fornite dalla libreria di sistema \texttt{stdio}. Per farlo, utilizzare la direttiva \texttt{\#include <stdio.h>}
+\end{frame}
+
+\begin{frame}
+\frametitle{La tua prima funzione in C}
+Si costruisca in C la funzione con prototipo \texttt{int mcm(int, int)}, che dati in ingresso due interi torna il loro minimo comune multiplo. Si costruisca una funzione \texttt{int test(void)} che ne verifichi il funzionamento, e si usi il main per stampare a video il risultato di tale test. Si compili come \texttt{mcm} e si esegua.
+ \begin{itemize}
+  \item Si noti che, dati due numeri a e b, il loro mcm si ottiene, ad esempio, sommando al più piccolo dei due, ad ogni iterazione, il suo valore iniziale, fin quando i due numeri sono uguali.
+  \item Si costruisca mcm in modo che depositi subito a e b in due nuove variabili a0 e b0. A questo punto si esegua un for che ad ogni passo aggiunge al più piccolo fra a e b il corrispondente a0 o b0. Tale for terminerà quando a e b sono uguali fra loro, e a quel punto si ritornerà o a o b.
+  \item Esempio di mcm(2,3):
+  \begin{enumerate}
+  \scriptsize
+   \item a = 2, b = 3, a0 = 2, b0 = 3;
+   \item a < b $\rightarrow{}$ a = 4, b = 3, a0 = 2, b0 = 3;
+   \item a > b $\rightarrow{}$ a = 4, b = 6, a0 = 2, b0 = 3;
+   \item a < b $\rightarrow{}$ a = 6, b = 6, a0 = 2, b0 = 3;
+   \item a == b $\rightarrow{}$ si ritorna 6;
+  \end{enumerate}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{La tua seconda funzione in C}
+Con riferimento alla funzione che realizza il fattoriale vista a lezione:
+\begin{itemize}
+ \item Si modifichi la funzione in maniera tale che utilizzi il tipo di dato \texttt{unsigned long int}
+ \item Si definisca tramite macro \texttt{MAX\_VAL}, che rappresenta il più grande valore che, passato in ingresso alla funzione, porta a computare un valore corretto
+  \begin{itemize}
+    \item Per trovare il valore, si potrebbe ad esempio iniziare a stampare diversi fattoriali, vedendo per quale valore per primo si ha overflow.
+  \end{itemize}
+ \item Si modifichi la funzione in maniera tale che, qualora il valore passato come parametro sia maggiore di \texttt{MAX\_VAL}, essa ritorni 0
+ \item Si scriva una appropriata funzione \texttt{int test(void)} che ne verifica il funzionamento
+ \item Si faccia in modo che il main esegua il test e stampi a video ``\texttt{OK}'' se il test passa, \texttt{``ERROR''} altrimenti.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Scrittura di funzioni matematiche: \texttt{math.h}}
+La libreria math.h contiene una serie di funzioni matematiche pronte all'uso, si veda \url{http://www.cplusplus.com/reference/cmath/}. La si usi per costruire all'interno di un file \texttt{functions.c} le seguenti funzioni:
+\begin{itemize}
+ \item \texttt{double ex(double x)} --- calcola $e^x$
+ \item \texttt{double sinx(double x)} --- calcola $sin(x)$
+ \item \texttt{double tanx(double x)} --- calcola $tan(x)$
+ \item \texttt{double logx(double x)} --- calcola $log(x)$
+\end{itemize}
+Queste funzioni non devono far altro che chiamare quelle di \texttt{math.h} al loro interno.
+\end{frame}
+
+\begin{frame}
+\frametitle{Creazione di una libreria di funzioni}
+Si implementino inoltre le seguenti:
+\begin{itemize}
+ \item \texttt{int minThree(int a, int b, int c)} --- torna il più piccolo di tre interi
+ \item \texttt{int randInInterval(int a, int b)} --- crea un numero casuale compreso fra \texttt{a} e \texttt{b}. Si utilizzi la funzione \texttt{int rand(void)}, fornita in stdlib.h (si veda \url{http://www.cplusplus.com/reference/cstdlib/})
+ \item \texttt{int previousSquare(int x)} --- calcola il più grande quadrato perfetto minore o uguale ad \texttt{x}
+ \item \texttt{double solveEquation(double a, double b, double c)} --- funzione che calcola una soluzione dell'equazione $ax^2 + bx + c$, tornando NaN se non vi sono soluzioni
+ \begin{itemize}
+  \item Si noti che le soluzioni di tale equazione sono  ovviamente $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$
+  \item Per tornare NaN, si può utilizzare la macro NAN definita in \texttt{math.h}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Scrittura di un header file}
+Si crei un header file \texttt{functions.h} contenente tutti i prototipi delle funzioni realizzate in precedenza. Come riferimento, si consideri il file \texttt{filters.h} allegato al codice.
+
+Si includa l'header appena creato in \texttt{functions.c}, utilizzando la direttiva: \\
+\texttt{\#include \textquotedbl{}functions.h\textquotedbl{}}
+
+Si compili il file in maniera tale da ottenere una libreria (opzione \texttt{-c}). Si ricordi di utilizzare la flag \texttt{-lm}, che indica al compilatore di caricare la libreria \texttt{math.h}.
+\end{frame}
+
+\begin{frame}
+\frametitle{Uso della libreria creata}
+\begin{itemize}
+ \item Si crei un nuovo file \texttt{uselib.c}
+ \item Si includa il file header appena creato 
+ \item Si scriva in uselib.c una funzione \texttt{int main()} che utilizzi al suo interno tutte le funzioni della libreria precedente, stampando a video i risultati delle prove che esegue.
+ \item Si compili, ricordandosi di includere \texttt{functions.o} fra i file di libreria, e si esegua il programma.
+ \item Dato che questo programma utilizza la libreria \texttt{functions.h}, che a sua volta utilizza \texttt{math.h}, è necessario utilizzare la flag \texttt{-lm} quando si compila!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Uso di \texttt{void printf()}}
+Si realizzi quanto segue:
+\scriptsize
+\begin{itemize}
+ \item Un programma, \texttt{zeromatrix.c}, che stampi a video una matrice 30x30 di zeri. Per farlo, si realizzi una funzione \texttt{void printEmptyMatrix(int n)} che stampa a video una matrice nxn di zeri.
+ \item Un programma, \texttt{matr.c}, che stampi a video una matrice 30x30 in cui tutti i valori sono 4. Per farlo, si realizzi una funzione \texttt{void printMatrix(int n, int v)} che stampa a video una matrice nxn di \texttt{v}. 
+ \item Un programma, \texttt{morematr.c}, che stampi a video una matrice 30x30 in cui le colonne pari hanno valore 4 e quelle dispari valore 6. Per farlo, si realizzi una funzione \texttt{void printMatrixCols(int n, int v1, int v2)} che stampa a video una matrice nxn le cui colonne pari hanno valore v1 e quelle dispari valore v2.
+ \item Un programma, \texttt{arrow.c}, che stampi una freccia fatta di 0, come mostrato nell'esempio seguente. Per farlo, si realizzi una funzione \texttt{void printArrow(int n)} che stampa a video una freccia con coda lunga \texttt{n}. L'esempio sotto è per \texttt{n} = 8.
+\end{itemize}
+\begin{verbatim}
+                  0
+          0000000000
+          00000000000
+          0000000000
+                  0
+\end{verbatim}
+\end{frame}
+\end{document}
+

@@ -30,8 +30,8 @@ class E3 {
                 arrayEquals(create(new int[]{1,7,10,15},-1),new int[]{1,7,10,15}) &&
                 arrayEquals(create(new int[]{1,7,10,8,4},-1),new int[]{1,7,10,-1,-1}) &&
                 arrayEquals(create(new int[]{1,7,10,8,4},0),new int[]{1,7,10,0,0}) &&
-				arrayEquals(create(new int[]{1,7,4,6,3},0),new int[]{1,7,0,0,0}) &&
-				arrayEquals(create(new int[]{1,7,4,6,12},0),new int[]{1,7,0,0,0}) &&
+		arrayEquals(create(new int[]{1,7,4,6,3},0),new int[]{1,7,0,0,0}) &&
+		arrayEquals(create(new int[]{1,7,4,6,12},0),new int[]{1,7,0,0,0}) &&
                 arrayEquals(create(new int[]{10,9,8,7},-1),new int[]{10,-1,-1,-1}) &&
                 arrayEquals(create(new int[]{1,7,10,10,4},0),new int[]{1,7,10,0,0});
 				
