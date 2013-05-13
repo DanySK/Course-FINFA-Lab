@@ -10,11 +10,11 @@ char *mystrcat(const char *c1, const char *c2) {
   return c;
 }
 
-char *scanToLast(char *s) {
-  char *result;
+char scanToLast(char *s) {
+  char result;
   int i = 0;
   for(; s[i] != '\0'; i++) {
-    result = &s[i];
+    result = s[i];
   }
   return result;
 }
@@ -22,14 +22,14 @@ char *scanToLast(char *s) {
 /*
  * This solution is correct, but forbidden :)
  */
-char *scanToLastStrlen(char *s) {
-  return &s[strlen(s)-1];
+char scanToLastStrlen(char *s) {
+  return s[strlen(s)-1];
 }
 
 int main(void) {
-  char *s1 = "Looks like this exercise";
-  char *s2 = "has been solved correctly";
+  char *s1 = "ottimo";
+  char *s2 = "lavoro";
   printf("%s\n", mystrcat(s1, s2));
-  printf("The last character of \"%s\" is %c\n", s1, *scanToLast(s1));
+  printf("The last character of \"%s\" is %c\n", s1, scanToLast(s1));
   return 0;
 }

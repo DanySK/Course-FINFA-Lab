@@ -45,14 +45,140 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 1/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1;
+   *i1=*i2;
+   *i2=temp;
+}    
+int main(void){
+   int a=10; // Il controllo è qui
+   int b=20;
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.2\columnwidth]{img/1}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 2/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1;
+   *i1=*i2;
+   *i2=temp;
+}    
+int main(void){
+   int a=10;
+   int b=20; // Il controllo è qui
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.2\columnwidth]{img/2}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 3/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){  // Il controllo è qui
+   int temp=*i1;
+   *i1=*i2;
+   *i2=temp;
+}    
+int main(void){
+   int a=10;
+   int b=20;
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.4\columnwidth]{img/3}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 4/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1; // Il controllo è qui
+   *i1=*i2;
+   *i2=temp;
+}    
+int main(void){
+   int a=10;
+   int b=20;
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.4\columnwidth]{img/4}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 5/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1;
+   *i1=*i2; // Il controllo è qui
+   *i2=temp;
+}    
+int main(void){
+   int a=10;
+   int b=20;
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.4\columnwidth]{img/5}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 6/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1;
+   *i1=*i2;
+   *i2=temp; // Il controllo è qui
+}    
+int main(void){
+   int a=10;
+   int b=20;
+   swap(&a,&b);
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.4\columnwidth]{img/6}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cosa succede? 7/7}
+\begin{verbatim}
+void swap(int *i1,int *i2){
+   int temp=*i1;
+   *i1=*i2;
+   *i2=temp;
+}    
+int main(void){
+   int a=10;
+   int b=20;
+   swap(&a,&b); // Il controllo è qui
+}\end{verbatim}
+\begin{figure}
+ \includegraphics[width = 0.2\columnwidth]{img/7}
+\end{figure}
+\end{frame}
+
 \begin{frame}
 \frametitle{Modifica dell'esempio}
 Si modifichi \texttt{e2.c} come segue:
 \begin{itemize}
  \item Si elimini il contenuto del \texttt{main}.
- \item Si crei un nuovo array di interi, contenente i valori 10, 20, 30 e 40.
+ \item Si crei sullo stack (sintassi \texttt{\{10, 20, 30, 40\}}) un nuovo array di interi, contenente i valori 10, 20, 30 e 40.
  \item Si stampi il valore dei quattro elementi dell'array tramite apposita \texttt{printf}
- \item Si invochi la funzione \texttt{swap} passando come primo argomento il puntatore al primo valore dell'array e come secondo valore il puntatore al secondo elemento dell'array (suggerimento: l'accesso all'i-esimo elemento dell'array a si effettua tramite \texttt{a[i]}, mentre il puntatore all'i-esimo elemento di a si può ottenere con \texttt{\&a[i]})
+ \item Si invochi la funzione \texttt{swap} passando come primo argomento il puntatore al primo valore dell'array e come secondo argomento il puntatore al secondo elemento dell'array (suggerimento: l'accesso all'i-esimo elemento dell'array a si effettua tramite \texttt{a[i]}, mentre il puntatore all'i-esimo elemento di a si può ottenere con \texttt{\&a[i]})
  \item Si stampi nuovamente il valore dei quattro elementi dell'array tramite apposita \texttt{printf}
  \item Si compili ed esegua: il risultato è conforme alle attese?
 \end{itemize}
@@ -60,29 +186,29 @@ Si modifichi \texttt{e2.c} come segue:
 
 \begin{frame}
 \frametitle{\texttt{void *malloc(unsigned int size)}}
-La funzione \texttt{void *malloc(unsigned int size)} consente di allocare per il programma una porzione di memoria grande \texttt{size} bytes.
+La funzione \texttt{void *malloc(unsigned int size)} consente di allocare per il programma una porzione di memoria nello heap grande \texttt{size} bytes.
 \begin{itemize}
  \item Si osservi il contenuto di \texttt{create\_array.c}. Cosa fa? Una volta compreso il funzionamento, si compili e si esegua.
- \item Si modifichi \texttt{create\_array.c} affinché crei un nuovo array il cui contenuto sia numerato progressivamente (e.g. \texttt{create\_array(5)} deve tornare \texttt{\{1,2,3,4,5\}}. Si modifichi il \texttt{main} perché esegua un test sulla funzione.
+ \item Si modifichi \texttt{create\_array.c} affinché crei un nuovo array il cui contenuto sia numerato progressivamente (e.g. \texttt{create\_array(5)} deve tornare \texttt{\{1,2,3,4,5\}}. Si modifichi il \texttt{main} perché stampi a video l'intero contenuto dell'array con gli elementi separati da spazi, quindi vada a capo.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Stringhe di caratteri in C}
-Diversamente da Java, C non ha supporto per il tipo \texttt{String} a livello di linguaggio. In C, le Stringhe sono in realtà dei \texttt{char *}, terminati dal carattere speciale \texttt{\textbackslash{}0}.
+Diversamente da Java, C non ha supporto per il tipo \texttt{String} a livello di linguaggio. In C, le Stringhe sono in realtà dei \texttt{char *} (ossia anche dei \texttt{char []}), terminati dal carattere speciale \texttt{\textbackslash{}0}.
 \begin{itemize}
- \item Utilizzando anche la funzione malloc vista in precedenza, e facendo riferimento ai lucidi visti a lezione, si realizzi una funzione che concatena due stringhe, separandole con uno spazio (si noti che la concatenazione semplice è già risolta nei lucidi!)
- \item Si scriva un \texttt{main} che testi la funzione appena realizzata
- \item Si scriva una funzione \texttt{char *scanToLast(char *s)} che, data una stringa di lunghezza non nota, torna un puntatore all'ultimo elemento. Non è consentito l'uso di \texttt{strlen}. La si testi nel \texttt{main}.
+ \item Utilizzando anche la funzione malloc vista in precedenza, e facendo riferimento ai lucidi visti a lezione, si realizzi una funzione che concatena due stringhe, separandole con uno spazio, ossia col carattere \texttt{' '} (si noti che la concatenazione semplice è già risolta nei lucidi!)
+ \item Si scriva un \texttt{main} che concateni le stringhe \textquotedbl{}ottimo\textquotedbl{} e \textquotedbl{}lavoro\textquotedbl{}. E le stampi a video. Si ricordi che è possibile stampare con \texttt{printf} un \texttt{char *} direttamente.
+ \item Si scriva una funzione \texttt{char scanToLast(char *s)} che, data una stringa di lunghezza non nota, torna l'ultimo elemento. Non è consentito l'uso di \texttt{strlen}. La si testi nel \texttt{main}.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Output negli argomenti}
-I puntatori consentono di utilizzare argomenti come output: si passa un puntatore all'area in cui vogliamo il risultato, la funzione computa e scrive in quell'area il risultato, in questo modo il chiamante può accedervi.
+I puntatori consentono di utilizzare argomenti come output: si passa un puntatore all'area in cui vogliamo il risultato, la funzione computa e scrive in quell'area il risultato, in questo modo il chiamante può accedervi. Si faccia riferimento alla slide 10 del pacchetto \texttt{06d-C-array\_puntatori2.pdf}.
 \begin{itemize}
  \item Si realizzi la funzione\\ \texttt{void sum(int a, int b, int *res)} \\che dati due interi ne calcola la somma e la mette nell'area di memoria puntata da res. Si verifichi nel \texttt{main} il funzionamento.
- \item Si realizzi la funzione\\ \texttt{void arrayCreator(int size, int **res)} \\che crea un array di interi lungo \texttt{size} nell'area di memoria puntata da res, utilizzando la \texttt{malloc}, quindi lo riempie con valori crescenti a partire da 0. Si verifichi nel \texttt{main} il funzionamento.
+ \item Si implementi nel file \texttt{array\_creator.c} la funzione\\ \texttt{void arrayCreator(int size, int **res)} \\che crea un array di interi lungo \texttt{size} nell'area di memoria puntata da res, utilizzando la \texttt{malloc}, quindi lo riempie con valori crescenti a partire da 0.
 \end{itemize}
 \end{frame}
 

@@ -3,17 +3,15 @@
 
 #define ARRAY_SIZE 500
 
-int *create_array (int size) {
-  int *res = (int *) malloc(size * sizeof(int));
-  int i;
-  for (i = 0; i < size; i++) {
-    res[i] = i;
-  }
-  return res;
+void array_creator (int size, int **res) {
 }
 
 int main (void) {
-  int *array = create_array(ARRAY_SIZE);
+  int *array;
+  /*
+   * Passo il puntatore all'array (ossia un puntatore a puntatore)
+   */
+  array_creator(ARRAY_SIZE, &array);
   int i;
   for (i = 0; i < ARRAY_SIZE; i++) {
      printf("%d ", array[i]);

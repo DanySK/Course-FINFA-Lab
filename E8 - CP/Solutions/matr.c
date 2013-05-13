@@ -26,7 +26,7 @@ void matrixCreator(int size, int ***res) {
   }
 }
 
-void reset_border(int **m,int size){
+void reset_diagonal(int **m,int size){
   int i;
   for (i=0;i<size;i++) {
     m[i][i]=0;
@@ -44,13 +44,13 @@ void print_matrix(int **m, int hsize, int vsize) {
 }
 
 int main(void){
-    const int size = 10;
-    int **m;
-    matrixCreator(size, &m);
-    printf("Created matrix:\n");
-    print_matrix(m, size, size);
-    reset_border(m,size);
-    printf("Matrix after border reset:\n");
-    print_matrix(m, size, size);
-    return 0;
+  const int size = 10;
+  int **m;
+  matrixCreator(size, &m);
+  printf("Created matrix:\n");
+  print_matrix(m, size, size);
+  reset_diagonal(m,size);
+  printf("Matrix after diagonal reset:\n");
+  print_matrix(m, size, size);
+  return 0;
 }
