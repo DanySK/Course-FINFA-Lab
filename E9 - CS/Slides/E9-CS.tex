@@ -1,0 +1,168 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 9 \\ Strutture dati in C}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}[fragile]
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item Accendere il computer
+ \item Effettuare il log-in con le proprie credenziali istituzionali
+  \begin{itemize}
+    \item Normalmente sono simili a: \texttt{nome.cognome@studio.unibo.it}
+  \end{itemize}
+ \item Aprire Google Chrome, o altro browser
+ \item Collegarsi al sito \url{http://bit.ly/finfa2013-e9}
+ \item Scaricare il pacchetto \url{http://bit.ly/finfa2013-e9-code}
+ \item Scompattare il pacchetto in una cartella a piacimento: questa sarà la vostra directory di lavoro di oggi.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{struct} e \texttt{typedef}}
+Si consideri il contenuto della cartella \texttt{es0}
+\begin{itemize}
+ \item Si osservi con attenzione \texttt{point\_base.h}. Cosa descrive?
+ \item Si osservi con attenzione \texttt{use\_point\_base.c}. Solo dopo averne compreso appieno il funzionamento, si compili e si esegua.
+ \item Si osservi ora \texttt{point.h}. In cosa differisce da \texttt{point\_base.h}?
+ \item Si osservi con attenzione \texttt{use\_point.c}. Qual è il risvolto pratico dell'uso della keyword \texttt{typedef}? Solo dopo averne compreso appieno il funzionamento, si compili e si esegua.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Una libreria C}
+Si consideri il contenuto della cartella \texttt{es1}.
+\begin{itemize}
+ \item \texttt{complex.c} implementa una libreria di operazioni sui numeri complessi
+ \item complex.h è un file header che contiene la definizione della struttura dati per rappresentare numeri complessi e il prototipo di tutte le funzioni sui complessi implementate dalla libreria.
+ \item usecomplex.c contiene un main che effettua alcune prove di funzionamento sulla libreria.
+ \item Si comprenda il funzionamento della libreria, si compili e si esegua.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esportazione di una libreria C}
+Data la libreria di funzioni sulle liste definita nel file \texttt{list.c} (all'interno della cartella \texttt{es2}), in questa seconda parte dell'esercitazione si dovrà rendere disponibile la libreria ad altri file C, definendo opportunamente un file header per la libreria.
+\begin{itemize}
+ \item Per prima cosa, creare un nuovo file \texttt{list.h}, dove secondo lo stesso schema del file header per i complessi \texttt{complex.h}, definirete:
+ \begin{enumerate}
+  \item la struttura dati rappresentante una lista (spostandola nell'header dal file \texttt{list.c})
+  \item la definizione dei tipo \texttt{List} (istruzione \texttt{typedef} anch'essa da togliere da \texttt{list.c} e spostare in \texttt{list.h})
+  \item il prototipo di tutte le funzioni implementate da \texttt{list.c}
+ \end{enumerate}
+ \item \textbf{SUGGERIMENTO}: trarre spunto dalla struttura utilizzata per il file di intestazione della libreria sui numeri complessi.
+ \item compilare la libreria per le liste, generando in uscita il file oggetto \texttt{list.o}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Uso della libreria esportata}
+Definire un file \texttt{uselist.c} contenente un main nel quale realizzare i seguenti test
+\begin{itemize}
+ \item Creazione di una lista (10,20,30,40):
+\begin{enumerate}
+ \item creare un array di interi contenente i 4 elementi specificati
+ \item creare la lista utilizzando la funzione \\ \texttt{List *list\_from\_array(int [],int)} al quale passare in ingresso l'array di interi appena creato, e che restituirà in uscita il puntatore alla lista appena creata
+ \item Assegnare il puntatore a una variabile di tipo \texttt{List *};
+\end{enumerate}
+ \item Creare ora una lista (50,60), questa volta utilizzando la funzione \texttt{List *list\_cons(int, List *)}, funzione che rappresenta il costruttore di una lista e che accetta in ingresso un intero e un puntatore ad una lista.
+ \item \textbf{SUGGERIMENTO}: utilizzare il costruttore ricorsivamente! Ad esempio per creare la lista (1,2,3) utilizzare il costruttore nel seguente modo: \texttt{cons(1,cons(2,cons(3,nil)));} ricordare che la lista vuota può essere creata tramite la funzione \texttt{List *list\_nil(void)}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Uso della libreria esportata}
+\begin{itemize}
+ \item Stampare su console la rappresentazione delle due liste appena create utilizzando la funzione \texttt{char *list\_to\_string(List *)} che accetta in ingresso il puntatore a una lista e restituisce l'array di caratteri contenente la stringa rappresentante la lista. \item \textbf{SUGGERIMENTO}: per stampare la lista su console utilizzare la funzione \texttt{printf} e il parametro \texttt{\%s}, come visto più volte a lezione.
+ \item Stampare su console la dimensione delle due liste avvalendosi della funzione \texttt{int list\_length(List *)}.
+ \item Ora "appendere" alla lista la la seconda lista lb: utilizzare la funzione \texttt{void list\_append\_to(List *,List *)} nel seguente modo: \texttt{list\_append\_to(la,lb)}. In coda alla lista \texttt{la} si troverà ora la lista \texttt{lb}: accertarsene stampando su console la stringa rappresentante la lista e la sua dimensione.
+ \item Compilare ed eseguire.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Uso degli argomenti del programma}
+\begin{itemize}
+ \item Così come in Java, anche in C è possibile passare degli argomenti ad un programma. Per utilizzarli, il main deve avere la signature: \\ \texttt{int main(int, char **)}\\ Il primo parametro che viene inserito è il numero di elementi presenti nel secondo argomento, che rappresenta il comando che è stato eseguito nel suo intero.
+ \item Si osservi il file \texttt{echo.c} nella cartella \texttt{es3}. Cosa realizza? Si compili e si testi il programma, invocando ad esempio \\\texttt{./echo mi piace informatica}
+ \item Cosa accade se la variabile i nel main di echo.c viene inizializzata a 0 e non a 1? Si eseguano delle prove.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Conversione da stringhe a numeri}
+Gli argomenti passati sono sempre in formato stringa (char *). Così come Java, C mette a disposizione delle utility di libreria in \texttt{stdlib.h} per convertire tali stringhe in numeri (\texttt{int}, \texttt{long}, \texttt{double}) in modo da poterli usare internamente. Tali funzioni sono:
+\begin{enumerate}
+ \item \texttt{int atoi (const char * str)} --- Converte in \texttt{int}
+ \item \texttt{long int atol (const char * str)} --- Converte in \texttt{long}
+ \item \texttt{double atof (const char* str)} --- Converte in \texttt{double}
+\end{enumerate}
+\begin{itemize}
+ \item Si osservi il contenuto di \texttt{input.c}. Cosa realizza?
+ \item Si compili \texttt{input.c} e si provi ad utilizzare il programma con diversi argomenti. Cosa accade se si passa un letterale?
+ \item Prendendo spunto da \texttt{input.c}, si realizzi in \texttt{sum.c} un programma che, dati in ingresso un numero arbitrario di argomenti di tipo intero, ne stampi a video la somma.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Puntatori a funzione}
+In C è possibile passare una funzione come argomento di una funzione. Si consideri il contenuto della cartella \texttt{es4}.
+\begin{itemize}
+ \item Si osservi il contenuto di \texttt{functptr.c}. Cosa realizza?
+ \item Si compili e si esegua \texttt{functptr.c}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Puntatori a funzione}
+Si modifichi la libreria delle liste creata prima come segue:
+\begin{itemize}
+ \item In \texttt{list.h}, definisca una nuova funzione\\ \texttt{void apply\_to\_all(List *, void (int *))}\\ che torna \texttt{void} e prende in ingresso
+ \begin{enumerate}
+  \scriptsize
+  \item un puntatore ad una \texttt{List}
+  \item una funzione che prende in ingresso un puntatore ad \texttt{int} e torna \texttt{void}
+ \end{enumerate}
+ E applica la funzione f a tutti gli elementi della lista
+ \item Si implementi in \texttt{list.c} tale funzione
+ \scriptsize
+ \item \textbf{SUGGERIMENTO}: Si scorra la lista fintanto che non si trova la lista vuota, e si applichi la funzione f al puntatore alla testa dell'elemento corrente.
+ \normalsize
+ \item Si utilizzi la versione modificata di \texttt{uselist.c} fornita nella cartella \texttt{es4}
+ \item Si definisca all'interno di \texttt{uselist.c} una funzione \\ \texttt{void filter(int *)} che, dato in ingresso un puntatore ad un intero, modifica l'elemento puntato nel seguente modo:
+ \begin{itemize}
+  \item Se l'elemento è pari, lo incrementa di 1
+  \item Se l'elemento è dispari, lo azzera
+ \end{itemize}
+ \item Si osservi attentamente come viene utilizzata la \texttt{apply\_to\_all} nel \texttt{main}. Si compili e si esegua.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Esercizi aggiuntivi}
+Come al solito, se terminate in anticipo tutti gli esercizi precedenti, vi consigliamo di allenarvi con quelli nella cartella \texttt{aggiuntivi}.
+\end{frame}
+
+
+
+
+\end{document}
+
