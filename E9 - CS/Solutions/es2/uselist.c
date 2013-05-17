@@ -22,6 +22,13 @@ int main(void){
 	printf("lista c: %s\n",list_to_string(lc));
 	List *ld = list_get(la,40);
 	printf("lista d: %s\n",list_to_string(ld));
+	
+	int b[10]={1,1,2,3,4,5,0,7,8,9};
+	la = list_from_array(b,10);
+	printf("lista prima del taglio: %s\n", list_to_string(la));
+	list_cut_zero(la);
+	printf("lista tagliata: %s\n", list_to_string(la));
+	
 	return 0;
 } 
 

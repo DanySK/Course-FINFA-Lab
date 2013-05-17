@@ -52,30 +52,46 @@ Si consideri il contenuto della cartella \texttt{es0}
 Si consideri il contenuto della cartella \texttt{es1}.
 \begin{itemize}
  \item \texttt{complex.c} implementa una libreria di operazioni sui numeri complessi
- \item complex.h è un file header che contiene la definizione della struttura dati per rappresentare numeri complessi e il prototipo di tutte le funzioni sui complessi implementate dalla libreria.
- \item usecomplex.c contiene un main che effettua alcune prove di funzionamento sulla libreria.
+ \item \texttt{complex.h} è un file header che contiene la definizione della struttura dati per rappresentare numeri complessi e il prototipo di tutte le funzioni sui complessi implementate dalla libreria.
+ \item \texttt{usecomplex.c} contiene un main che effettua alcune prove di funzionamento sulla libreria.
  \item Si comprenda il funzionamento della libreria, si compili e si esegua.
+ \begin{itemize}
+  \item Per compilare la libreria: \\ \texttt{gcc -c -Wall complex.c -o complex.o}
+  \item Per compilare il programma che usa la libreria:\\ \texttt{gcc -Wall complex.o usecomplex.c -o usecomplex}
+  \item Per eseguire: \\ usecomplex.exe (Windows) \\ ./usecomplex (UNIX)
+ \end{itemize}
+
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Esportazione di una libreria C}
-Data la libreria di funzioni sulle liste definita nel file \texttt{list.c} (all'interno della cartella \texttt{es2}), in questa seconda parte dell'esercitazione si dovrà rendere disponibile la libreria ad altri file C, definendo opportunamente un file header per la libreria.
+\frametitle{Una libreria C}
+Si consideri il contenuto della cartella \texttt{es1}.
 \begin{itemize}
- \item Per prima cosa, creare un nuovo file \texttt{list.h}, dove secondo lo stesso schema del file header per i complessi \texttt{complex.h}, definirete:
- \begin{enumerate}
-  \item la struttura dati rappresentante una lista (spostandola nell'header dal file \texttt{list.c})
-  \item la definizione dei tipo \texttt{List} (istruzione \texttt{typedef} anch'essa da togliere da \texttt{list.c} e spostare in \texttt{list.h})
-  \item il prototipo di tutte le funzioni implementate da \texttt{list.c}
- \end{enumerate}
- \item \textbf{SUGGERIMENTO}: trarre spunto dalla struttura utilizzata per il file di intestazione della libreria sui numeri complessi.
- \item compilare la libreria per le liste, generando in uscita il file oggetto \texttt{list.o}
+ \item Si decommenti completamente il \texttt{main} di \texttt{usecomplex.c}
+ \item Si implementi la funzione\\ \texttt{Complex *complex\_find\_biggest(Complex *, int)}\\ che, dato in ingresso un array di \texttt{Complex} ed un \texttt{int} rappresentante il numero di elementi nell'array, torna in uscita un puntatore al numero complesso di modulo maggiore.
+ \item Il \texttt{main} decommentato può essere utilizzato per testare la vostra funzione.
 \end{itemize}
 \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{Esportazione di una libreria C}
+% Data la libreria di funzioni sulle liste definita nel file \texttt{list.c} (all'interno della cartella \texttt{es2}), in questa seconda parte dell'esercitazione si dovrà rendere disponibile la libreria ad altri file C, definendo opportunamente un file header per la libreria.
+% \begin{itemize}
+%  \item Per prima cosa, creare un nuovo file \texttt{list.h}, dove secondo lo stesso schema del file header per i complessi \texttt{complex.h}, definirete:
+%  \begin{enumerate}
+%   \item la struttura dati rappresentante una lista (spostandola nell'header dal file \texttt{list.c})
+%   \item la definizione dei tipo \texttt{List} (istruzione \texttt{typedef} anch'essa da togliere da \texttt{list.c} e spostare in \texttt{list.h})
+%   \item il prototipo di tutte le funzioni implementate da \texttt{list.c}
+%  \end{enumerate}
+%  \item \textbf{SUGGERIMENTO}: trarre spunto dalla struttura utilizzata per il file di intestazione della libreria sui numeri complessi.
+%  \item compilare la libreria per le liste, generando in uscita il file oggetto \texttt{list.o}
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Uso della libreria esportata}
-Definire un file \texttt{uselist.c} contenente un main nel quale realizzare i seguenti test
+Data la libreria list fornita con i file \texttt{list.c} e \texttt{list.h}, definire un file \texttt{uselist.c} contenente un main nel quale realizzare i seguenti test
 \begin{itemize}
  \item Creazione di una lista (10,20,30,40):
 \begin{enumerate}
@@ -84,7 +100,6 @@ Definire un file \texttt{uselist.c} contenente un main nel quale realizzare i se
  \item Assegnare il puntatore a una variabile di tipo \texttt{List *};
 \end{enumerate}
  \item Creare ora una lista (50,60), questa volta utilizzando la funzione \texttt{List *list\_cons(int, List *)}, funzione che rappresenta il costruttore di una lista e che accetta in ingresso un intero e un puntatore ad una lista.
- \item \textbf{SUGGERIMENTO}: utilizzare il costruttore ricorsivamente! Ad esempio per creare la lista (1,2,3) utilizzare il costruttore nel seguente modo: \texttt{cons(1,cons(2,cons(3,nil)));} ricordare che la lista vuota può essere creata tramite la funzione \texttt{List *list\_nil(void)}.
 \end{itemize}
 \end{frame}
 
@@ -98,12 +113,22 @@ Definire un file \texttt{uselist.c} contenente un main nel quale realizzare i se
 \end{itemize}
 \end{frame}
 
+
+\begin{frame}[fragile]
+\frametitle{Uso della libreria esportata}
+\begin{itemize}
+ \item Si crei la funzione \texttt{void list\_cut\_zero(List *)} che, data una lista, la taglia al primo zero che incontra.
+ \item Si testi tale funzione nel \texttt{main}.
+\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]
 \frametitle{Uso degli argomenti del programma}
 \begin{itemize}
  \item Così come in Java, anche in C è possibile passare degli argomenti ad un programma. Per utilizzarli, il main deve avere la signature: \\ \texttt{int main(int, char **)}\\ Il primo parametro che viene inserito è il numero di elementi presenti nel secondo argomento, che rappresenta il comando che è stato eseguito nel suo intero.
  \item Si osservi il file \texttt{echo.c} nella cartella \texttt{es3}. Cosa realizza? Si compili e si testi il programma, invocando ad esempio \\\texttt{./echo mi piace informatica}
- \item Cosa accade se la variabile i nel main di echo.c viene inizializzata a 0 e non a 1? Si eseguano delle prove.
+ \item \textbf{ATTENZIONE}: Non si nomini il programma \texttt{echo} (o \texttt{echo.exe}), ma si compili con altro nome (e.g. \\ \texttt{gcc echo.c -Wall -o programma}). Questo perché \texttt{echo} è anche un programma di sistema, ed il sistema potrebbe invocare quello di sistema invece del vostro.
+ \item Cosa accade se la variabile i nel main di \texttt{echo.c} viene inizializzata a 0 e non a 1? Si eseguano delle prove.
 \end{itemize}
 \end{frame}
 
@@ -133,9 +158,9 @@ In C è possibile passare una funzione come argomento di una funzione. Si consid
 
 \begin{frame}[fragile]
 \frametitle{Puntatori a funzione}
-Si modifichi la libreria delle liste creata prima come segue:
+Si modifichi la libreria delle liste data prima come segue:
 \begin{itemize}
- \item In \texttt{list.h}, definisca una nuova funzione\\ \texttt{void apply\_to\_all(List *, void (int *))}\\ che torna \texttt{void} e prende in ingresso
+ \item In \texttt{list.h}, definisca una nuova funzione\\ \texttt{void apply\_to\_all(List *, void (*)(int *))}\\ che torna \texttt{void} e prende in ingresso
  \begin{enumerate}
   \scriptsize
   \item un puntatore ad una \texttt{List}

@@ -28,4 +28,6 @@ List *list_get(List *l, int i);
 
 char *list_to_string(List *l);
 
+void list_cut_zero(List *l);
+
 #endif

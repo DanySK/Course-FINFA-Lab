@@ -12,7 +12,7 @@ void twice(int *i){
   (*i)*=2;
 }
 
-void applyfunction(int * array, void f(int *i), int start, int end) {
+void applyfunction(int * array, void (*f)(int *i), int start, int end) {
   int i;
   for(i = start; i < end; i++) {
     f(&array[i]);
@@ -33,9 +33,9 @@ int main(void) {
   printf("Array iniziale: ");
   printarray(a, 9);
   
-  applyfunction(a, increase, 0, 3);
-  applyfunction(a, decrease, 3, 6);
-  applyfunction(a, twice, 6, 9);
+  applyfunction(a, &increase, 0, 3);
+  applyfunction(a, &decrease, 3, 6);
+  applyfunction(a, &twice, 6, 9);
   
   printf("Array finale: ");
   printarray(a, 9);

@@ -1,15 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define LIST_SIZE sizeof(List)
-
-struct list {
-    int head;
-    struct list *tail;
-};
-
-typedef struct list List;
+#include "list.h"
 
 List *list_cons(int head,List *tail){
     List *l=(List *)malloc(LIST_SIZE);
@@ -40,9 +32,30 @@ int list_length(List *l){
 }
 
 void list_append_to(List *l1,List *l2){
-    if (list_is_empty(l1)) return;
-    for (;!list_is_empty(l1->tail);l1=l1->tail);
-    l1->tail=l2;
+    if (!list_is_empty(l1)) {
+        for (;!list_is_empty(l1->tail);l1=l1->tail);
+        l1->tail=l2;
+    }
+}
+
+int list_search(List *l, int i){
+    if (list_is_empty(l)){
+        return 0;
+    }else if (l->head==i){
+        return 1;
+    }else{
+        return list_search(l->tail,i);
+    }
+}
+
+List *list_get(List *l, int i){
+    if (list_is_empty(l)){
+        return list_nil();
+    }else if (l->head==i){
+        return l;
+    }else{
+        return list_get(l->tail,i);
+    }
 }
 
 char *list_to_string(List *l){
