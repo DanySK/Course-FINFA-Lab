@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 9 \\ Strutture dati in C}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}[fragile]
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item \textbf{AVVISO:} per chi volesse sperimentare con i device file ed i comandi in stile Unix presentati a lezione, può fare boot sulla \textbf{macchina fisica}, dove è disponibile una macchina virtuale Linux installata in \texttt{D:\textbackslash{}finfa}
+ \item La stessa macchina sarà utilizzata per l'ultimo laboratorio
+ \item Slides: \url{http://bit.ly/finfa2013-e10}
+ \item Codice: \url{http://bit.ly/finfa2013-e10-code}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Linguaggio Assembly}
+Conoscere il linguaggio assembly non fa parte delle competenze che dovete acquisire per questo corso, ma è utile per capire come funziona la macchina sottostante (approfondirete in Calcolatori Elettronici!).
+\begin{itemize}
+ \item Si consideri \texttt{sum.c}. Se ne comprenda il funzionamento, quindi si compili con: \\ \texttt{gcc -S sum.c -o sum -Wall} \\ Quali files sono stati prodotti?
+ \item Si apra e si analizzi \texttt{sum.s}. Si cerchino delle corrispondenze fra il codice C e quello ASM:
+  \begin{itemize}
+    \item Come sono organizzate le funzioni?
+    \item Come sono organizzati i loop?
+%    \item Cosa accade prima dell'esecuzione di \texttt{call}, istruzione ASM che trasferisce il controllo ad un'altra funzione?
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Esempio di accesso al file system: \texttt{cat}}
+\begin{itemize}
+ \item Si osservi il contenuto di \texttt{cat.c}. Cosa realizza?
+ \item Una volta compreso il funzionamento, si compili e si esegua.
+ \item Si modifichi cat.c perché sia in grado di funzionare con più di un file in input.
+ \item \textbf{SUGGERIMENTO:}
+ \begin{enumerate}
+  \item si crei una nuova funzione che, dato un file, lo stampa a schermo. Si noti che questa funzionalità è già offerta da \texttt{cat.c} all'interno del \texttt{main}.
+  \item A questo punto, si chiami la funzione per ogni argomento passato, costruendo un ciclo \texttt{for} che scorre \texttt{argv} dal secondo elemento in poi e richiami la funzione costruita sopra.
+  \item Si elimini il messaggio di warning riguardante i parametri in eccesso.
+ \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Filtro input-output, pipe, redirect}
+\begin{itemize}
+ \item Si osservi il contenuto di \emph{filter.c}. Cosa realizza?
+ \item Si compili e si testi il programma
+ \item Si immagini che Twitter abbia messo a pagamento l'uso delle vocali: si modifichi \texttt{filter.c} affinché sostituisca a tutte le vocali della stringa in input la lettera Y, in modo da poter scrivere dei tweet il cui costo di pubblicazione sia zero.
+ \item Si provi ad utilizzare il comando con la pipe: \\ \texttt{echo look at the pipe! \textbar{} filter} \\ Come si comporta?
+ \item Si provi ora ad utilizzare l'operatore di redirect per creare un nuovo file contenente il tweet: \\ \texttt{echo look at the pipe! \textbar{} filter > tweet} \\ Cosa succede?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Salvataggio di dati}
+Si scriva un nuovo programma che:
+\begin{itemize}
+ \item Legga due argomenti e li converta in numeri, interpretandoli come valore inizio e valore fine.
+ \item Generi, ad intervalli di 0.01 a partire dal valore inizio e fino al valore fine, i valori della funzione coseno.
+ \item Conservi questi valori all'interno di un apposito array
+ \item Salvi tali valori in un file \texttt{data.log}. Il formato dei dati deve essere analogo a quello del file \texttt{data.log} fornito nei code examples.
+\end{itemize}
+\scriptsize
+\textbf{SUGGERIMENTI} --- Si ricorda che:
+\begin{itemize}
+ \item la funzione \texttt{double atof(const char*)} converte una stringa in double, si trova in \texttt{stdlib.h}
+ \item la funzione \texttt{int fprintf(FILE *, const char *, ...)} in \texttt{stdio.h} consente di stampare su un descrittore di file del testo formattato (come \texttt{printf}, ma su qualunque file).
+ \item esiste la funzione \texttt{double cos(double x)} di \texttt{math.h}.
+ \item per compilare un sorgente che includa \texttt{math.h}, è necessario specificare la flag \texttt{-lm} a \texttt{gcc} (e.g. \texttt{gcc -lm -Wall programma.c -o programma})
+ \item Si osservi la slide 27 del pacchetto riguardante la gestione dei file!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Caricamento di dati}
+Si scriva un nuovo programma che:
+\begin{itemize}
+ \item Legga un file \texttt{data.log} formattato come il file \texttt{data.log} allegato ai code examples.
+ \item Inserisca i dati caricati all'interno di un apposito array (\texttt{double *})
+ \item Stampi a video il contenuto del array
+ \item \textbf{BONUS:} calcolare correttamente la dimensione del array
+\end{itemize}
+\scriptsize
+\textbf{SUGGERIMENTI} --- Si ricorda che:
+\begin{itemize}
+ \item la funzione \texttt{int fscanf(FILE *, const char *, ...)} legge da uno stream qualsiasi una stringa formattata ed inserisce i risultati nelle aree di memoria puntate dagli argomenti aggiuntivi passati
+ \item la funzione \texttt{void rewind(FILE *)} riporta il file descriptor passato all'inizio del file
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Opzionali}
+Svolgete gli esercizi seguenti se avete completato tutta la precedente parte di esercitazione.
+\end{frame}
+
+\begin{frame}[fragile]{Modifica di \texttt{cp}: \texttt{mv}}
+\begin{itemize}
+ \item Si osservi il contenuto di \texttt{cp.c}. Cosa realizza?
+ \item Sulla base di \texttt{cp.c} e \texttt{cat.c}, si realizzi un nuovo programma \texttt{mv.c} tale che:
+ \begin{itemize}
+  \item Il programma invece di copiare il file lo sposti, ossia tale che la copia originale venga cancellata. Si utilizzi la funzione \\ \texttt{int remove(const char *)}, che dato un nome di file lo elimina.
+  \item Il programma non utilizzi un array predimensionato come in cp.c, ma calcoli la dimensione del file (come in mv.c) e crei un array della dimensione appropriata. Si ricorda che in C per allocare una quantità di memoria nota solo a runtime è necessario l'uso della funzione \\ \texttt{void* malloc (unsigned int size);}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}
+
