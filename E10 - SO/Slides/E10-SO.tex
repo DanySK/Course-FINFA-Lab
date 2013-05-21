@@ -47,12 +47,15 @@ Conoscere il linguaggio assembly non fa parte delle competenze che dovete acquis
 \begin{frame}[fragile]{Esempio di accesso al file system: \texttt{cat}}
 \begin{itemize}
  \item Si osservi il contenuto di \texttt{cat.c}. Cosa realizza?
- \item Una volta compreso il funzionamento, si compili e si esegua.
- \item Si modifichi cat.c perché sia in grado di funzionare con più di un file in input.
- \item \textbf{SUGGERIMENTO:}
+ \item Una volta compreso il funzionamento, si compili e si esegua, ad esempio con \\ \texttt{./cat cat.c filter.c}
+ \item Si modifichi cat.c perché sia in grado di funzionare con più di un file in input, ossia: \\ \texttt{./cat file1 file2 file3} \\ restituisce in output \\ \texttt{<contenuto di file1> \\ <contenuto di file2> \\ <contenuto di file3>}
+ \item \textbf{SUGGERIMENTI:}
  \begin{enumerate}
-  \item si crei una nuova funzione che, dato un file, lo stampa a schermo. Si noti che questa funzionalità è già offerta da \texttt{cat.c} all'interno del \texttt{main}.
+ \scriptsize
+  \item si crei una nuova funzione \\ \texttt{void printFile(char *)} \\ che, dato una stringa rappresentante il path di un file, lo stampa a schermo. Si noti che questa funzionalità è già offerta da \texttt{cat.c} all'interno del \texttt{main}.
+ \scriptsize
   \item A questo punto, si chiami la funzione per ogni argomento passato, costruendo un ciclo \texttt{for} che scorre \texttt{argv} dal secondo elemento in poi e richiami la funzione costruita sopra.
+ \scriptsize
   \item Si elimini il messaggio di warning riguardante i parametri in eccesso.
  \end{enumerate}
 \end{itemize}
@@ -93,7 +96,7 @@ Si scriva un nuovo programma che:
  \item Legga un file \texttt{data.log} formattato come il file \texttt{data.log} allegato ai code examples.
  \item Inserisca i dati caricati all'interno di un apposito array (\texttt{double *})
  \item Stampi a video il contenuto dell'array
- \item \textbf{BONUS:} calcolare correttamente la dimensione dell'array
+%  \item \textbf{BONUS:} calcolare correttamente la dimensione dell'array
 \end{itemize}
 \scriptsize
 \textbf{SUGGERIMENTI} --- Si ricorda che:
@@ -112,8 +115,20 @@ Svolgete gli esercizi seguenti se avete completato tutta la precedente parte di 
  \item Si osservi il contenuto di \texttt{cp.c}. Cosa realizza?
  \item Sulla base di \texttt{cp.c} e \texttt{cat.c}, si realizzi un nuovo programma \texttt{mv.c} tale che:
  \begin{itemize}
-  \item Il programma invece di copiare il file lo sposti, ossia tale che la copia originale venga cancellata. Si utilizzi la funzione \\ \texttt{int remove(const char *)}, che dato un nome di file lo elimina.
+  \item Il programma invece di copiare il file lo sposti, ossia tale che la copia originale venga cancellata. Si utilizzi la funzione \\ \texttt{int remove(const char *)} di \texttt{stdlib.h}, che dato un nome di file lo elimina. Si veda \url{http://www.cplusplus.com/reference/cstdio/remove/}
   \item Il programma non utilizzi un array predimensionato come in cp.c, ma calcoli la dimensione del file (come in mv.c) e crei un array della dimensione appropriata. Si ricorda che in C per allocare una quantità di memoria nota solo a runtime è necessario l'uso della funzione \\ \texttt{void* malloc (unsigned int size);}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{replace}}
+\begin{itemize}
+ \item Si osservi il contenuto del filtro \texttt{replace.c}. Cosa realizza?
+ \item Sulla base di \texttt{replace.c}, si realizzi un nuovo programma \texttt{duplicate.c} tale che:
+ \begin{itemize}
+  \item Il programma è un filtro che prende in ingresso un solo argomento, del quale considera il primo carattere
+  \item ogni volta che in ingresso il programma incontra il simbolo passato, deve duplicarlo.
+  \item \textbf{ESEMPIO:} \\ \texttt{echo casa | ./duplicate a} \\ deve avere come output: \\ \texttt{caasaa}
  \end{itemize}
 \end{itemize}
 \end{frame}

@@ -7,6 +7,14 @@ int main (int argc, char **argv){
   char *res;
   do{
     res = fgets(buffer, BUFDIM, stdin);
+    /*
+     * res == buffer is equivalent to:
+     * res != NULL
+     * 
+     * See the documentation of fgets at
+     * 
+     * http://www.cplusplus.com/reference/cstdio/fgets/
+     */
     if(res == buffer) {
       fputs(res, stdout);
     }
