@@ -1,9 +1,12 @@
 #include <gtk/gtk.h>
 #include "colorfactory.h"
+#include <stdio.h>
 
 GtkWidget *drawing_area;
 
 gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+
+	printf("REDRAW!!\n");
 	/*
 	 * Widget current size computation
 	 */

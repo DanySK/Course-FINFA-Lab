@@ -1,0 +1,197 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+%
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%% Subtitle
+%\subtitle[Short Subtitle]{Full Subtitle}
+%%%% Authors
+%%%% Institution/Partner
+%%%% Date
+% Structure slides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 11 \\ Applicazione completa}
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
+\date[\today]{\today}
+
+\frame{\titlepage} 
+
+\begin{frame}[fragile]{Nota prima di cominciare}
+Vi ricordo che gli esercizi svolti in aula ieri dal prof. Viroli sono disponibili online. Si tratta di un pacchetto molto utile per chi sta preparando l'esame, ed il suo download è caldamente consigliato. Lo trovate all'indirizzo \\ \url{http://bit.ly/finfa2013-lastexercises} \\
+\textbf{Non} sono esercizi da svolgere in questo laboratorio, ma ho voluto comunque ricordarveli.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operazioni preliminari}
+\begin{itemize}
+ \item \textbf{AVVISO:} per svolgere questo laboratorio è necessiario utilizzare la macchina virtuale del corso. Si faccia boot sulla \textbf{macchina fisica}, dove è disponibile una macchina virtuale Linux installata in \texttt{D:\textbackslash{}finfa}
+ \item Slides: \url{http://bit.ly/finfa2013-e11}
+ \item Codice: \url{http://bit.ly/finfa2013-e11-code}
+ \item Svolgete i punti contrassegnati come \textbf{OPZ.} solo quando avete completato tutti gli altri punti: sono versioni leggermente più difficili degli esercizi precedenti.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Applicazione completa}
+In questo laboratorio metterete mano dentro un'applicazione grafica C scritta da me.
+\begin{itemize}
+ \item Tale applicazione è in grado di mostrare a video delle funzioni, disegnandole all'interno di un'area di disegno.
+ \item Inoltre, a ciascuna funzione può applicare un filtro che la modifica, e disegnare a video la funzione filtrata.
+ \item Il codice è piuttosto commentato: aprite i sorgenti e cominciate a prendere dimestichezza con il sorgente
+\end{itemize}
+Componenti:
+\begin{itemize}
+ \item La libreria \texttt{colorfactory.h} che abbiamo visto a lezione è utilizzata anche qui
+ \item La libreria \texttt{functions.h} descrive una struttura dati che associa un puntatore a funzione ad un nome
+ \item La libreria \texttt{filters.h}, è molto simile, ma la struttura (parametri di ingresso e uscita) del puntatore a funzione è differente
+ \item La libreria \texttt{points.h}, contiene una semplice struttura dati per la descrizione di un punto in 2D con coordinate cartesiane.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Compilazione}
+Per prima cosa, bisogna compilare il programma. Vi ricordo che per compilare librerie che si appoggiano a GTK+3 è necessario utilizzare gcc come segue:
+\scriptsize
+\begin{verbatim}
+gcc `pkg-config --libs --cflags gtk+-3.0` -c -Wall libreria.c
+\end{verbatim}
+\normalsize
+Il particolare apice da utilizzare può essere ottenuto in ambiente Linux con la combinazione di tasti \texttt{AltGr+'}
+
+Per compilare invece un programma che usa GTK+3 ed altre librerie (in questo caso \texttt{lib1} e \texttt{lib2}), il comando è:
+\scriptsize
+\begin{verbatim}
+gcc `pkg-config --libs --cflags gtk+-3.0` lib1.o lib2.o -Wall programma.c
+\end{verbatim}
+\normalsize
+\begin{itemize}
+ \item Non è necessario compilare \texttt{points.h}, dato che non ha alcun file c di implementazione.
+ \item Compilare \texttt{colorfactory.c} come libreria
+ \item Compilare \texttt{functions.c} come libreria
+ \item Compilare \texttt{filters.c} come libreria
+ \item Compilare \texttt{FunctionDrawer.c} come programma che usa le tre librerie precedenti
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Esecuzione}
+Una volta compilato, si esegua l'applicazione tramite doppio click sull'eseguibile oppure lanciando il comando
+\begin{verbatim}
+./a.out
+\end{verbatim}
+Eventualmente sostituendo ad \texttt{a.out} il nome che avete dato all'eseguibile da produrre.
+
+Provate a graficare diverse funzioni, applicare diversi filtri e a giocare con le sliders.
+\end{frame}
+
+\begin{frame}[fragile]{Cambiare colore al disegno della funzione filtrata}
+La funzione filtrata è attualmente colorata in nero, il che la rende poco evidente. Si modifichi il programma affinché sia colorata in rosso.
+\begin{enumerate}
+ \item In \texttt{colorfactory.h}, si definisca un nuovo colore, ossia una variabile di tipo \texttt{const GdkRGBA*}, dandogli un nome appropriato (ad esempio, \texttt{color\_red})
+ \item In \texttt{colorfactory.c}, si definisca una nuova funzione \\ \texttt{static GdkRGBA* gen\_color\_red(void)} \\ che inizializzi la variabile dichiarata nell'header. Si prendano come riferimento le tre funzioni fornite. Si ricorda, inoltre, che per creare il colore rosso è necessario mettere ad \texttt{1.0} i campi di colore che descrivono rosso e trasparenza (alpha) e a \texttt{0.0} i restanti campi.
+ \item In \texttt{colorfactory.c}, si modifichi la funzione \texttt{void init\_color\_factory(void)} in maniera tale che inizializzi anche il nuovo colore. Si prenda spunto dal modo in cui vengono inizializzati gli altri colori.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Cambiare colore al disegno della funzione filtrata}
+\begin{enumerate}
+\setcounter{enumi}{3}
+ \item Si ricompili colorfactory.c
+ \item In \texttt{FunctionDrawer.c}, nella funzione \\ \texttt{static void draw\_function(cairo\_t *)}\\ si modifichi l'argomento passato alla funzione \texttt{gdk\_cairo\_set\_source\_rgba} quando viene chiamata per definire il colore della funzione filtrata, in maniera tale che il colore non sia più \texttt{color\_black} ma il nuovo colore che avete definito.
+ \item Si ricompili \texttt{FunctionDrawer.c} e si verifichi che la funzione filtrata appaia ora di colore rosso.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Implementazione di nuove funzioni}
+Si implementino nel programma le seguenti nuove funzioni:
+\begin{itemize}
+ \item \texttt{``cos(x)''} --- $\cos(x)$
+ \item \texttt{``log(x)''} --- $\log(x)$
+ \item \textbf{OPZ.} \texttt{``wing(x)''} --- $\left\{
+        \begin{array}{ll}
+            \cos(x) + 5 \log(-x + 1) & \quad x \leq 0 \\
+            \cos(x) + 5 \log(x + 1) & \quad x > 0
+        \end{array}
+    \right.$
+\end{itemize}
+Per implementare una qualunque nuova funzione \texttt{f}, si seguano i seguenti passi:
+\begin{enumerate}
+ \item In \texttt{functions.c}, prendendo spunto dalle implementazioni esistenti, si implementi \\ \texttt{static double f(double)}
+ \item In \texttt{functions.c}, si modifichi la funzione \\ \texttt{void init\_functions(void)} \\ in maniera che la variabile \texttt{functions\_number} contenga il corretto numero di funzioni definite, e che la nuova funzione \texttt{f} abbia una propria entry nell'array \texttt{functions}. Si osservi come vengono gestite le funzioni esistenti.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Implementazione di nuove funzioni}
+\begin{enumerate}
+\setcounter{enumi}{2}
+ \item Si ricompili \texttt{functions.c}
+ \item Si ricompili \texttt{FunctionDrawer.c} e si verifichi che la funzione aggiunta appare ora nell'elenco di quelle disponibili. Si verifichi che venga graficato quanto atteso.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Implementazione di nuovi filtri}
+Si implementino nel programma i seguenti nuovi filtri:
+\begin{itemize}
+ \item \texttt{absolute} --- calcola la funzione modulo della funzione data ($\sqrt{(f(x))^2}$), ossia trasforma in positivi i valori negativi. Si prenda spunto dal filtro \texttt{onlypos} già implementato, che azzera i valori negativi di una funzione.
+ \item \textbf{OPZ.} \texttt{derivate} --- calcola la funzione derivata della funzione data $f'(x)$. Si ricordi la definizione di derivata come limite del rapporto incrementale: il valore della derivata è approssimabile come $f'(x) \approx \frac{f(x + \varepsilon) - f(x)}{\varepsilon}$. Si prenda spunto dal filtro \texttt{integrate} già implementato, che calcola (a meno di una costante) il valore della funzione integrale della funzione data ($\int{f(x)dx}$), approssimando l'integrale come somma dell'area di rettangoli.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Implementazione di nuovi filtri}
+Per implementare un qualunque nuovo filtro \texttt{f}, si seguano i seguenti passi:
+\begin{enumerate}
+ \item In \texttt{filters.c}, prendendo spunto dalle implementazioni esistenti, si implementi \\ \texttt{void f(GArray *, GArray *)}
+ \item In \texttt{filters.c}, si modifichi la funzione \\ \texttt{void init\_filters(void)} \\ in maniera che la variabile \texttt{filters\_number} contenga il corretto numero di filtri definiti, e che il nuovo filtro \texttt{f} abbia una propria entry nell'array \texttt{filters}. Si osservi come vengono gestiti i filtri esistenti.
+ \item Si ricompili \texttt{filters.c}
+ \item Si ricompili \texttt{FunctionDrawer.c} e si verifichi che il filtro aggiunto appare ora nell'elenco di quelli disponibili. Si verifichi che venga graficato quanto atteso.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Creazione di un pulsante}
+Si crei un pulsante nell'interfaccia la cui funzione sia quella di salvare su disco i punti calcolati dalla funzione filtrata. Per farlo, si seguano i seguenti passi:
+\begin{enumerate}
+ \item In \texttt{FunctionDrawer.c}, all'interno della funzione \\ \texttt{static void activate(GtkApplication *, gpointer)} \\ si definisca un nuovo \texttt{GtkWidget *}. Lo si chiami, ad esempio, \texttt{save\_button}. Tale definizione può avvenire assieme a quelle degli altri \texttt{GtkWidget *} già presenti.
+ \item In \texttt{FunctionDrawer.c}, all'interno della funzione \\ \texttt{static void activate(GtkApplication *, gpointer)}, si istanzi il nuovo pulsante utilizzando la funzione\\ \texttt{GtkWidget *gtk\_button\_new\_with\_label(char *)}\\ Una corretta invocazione può essere ad esempio: \\ \texttt{save\_button = gtk\_button\_new\_with\_label(\textquotedbl{}Save\textquotedbl{});}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Aggiunta del pulsante, collegamento della callback}
+\begin{enumerate}
+\setcounter{enumi}{2}
+ \item Si aggiunga il pulsante al layout verticale di destra, in fondo. Per farlo, si invochi la funzione seguente: \\ \texttt{gtk\_box\_pack\_start(GTK\_BOX(rlayout), save\_button, TRUE, FALSE, 0);} \\ Se si vuole posizionare il pulsante in basso, tale chiamata deve essere posta dopo le altre invocazioni della stessa funzione.
+ \item Si compili \texttt{FunctionDrawer.c} e si verifichi che il pulsante (ancora privo di funzionalità collegate ai propri signals) sia presente nell'interfaccia dove desiderato.
+ \item Si colleghi la funzione callback \\ \texttt{void save(GtkApplication *, gpointer)} \\ già implementata al signal ``clicked'' del pulsante. Per farlo, si utilizzi la seguente linea di codice: \\ \texttt{g\_signal\_connect(save\_button, \textquotedbl{}clicked\textquotedbl{}, G\_CALLBACK(save), NULL);}
+ \item Si compili \texttt{FunctionDrawer.c} e si verifichi che il pulsante quando premuto ora apre una finestra di salvataggio.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Completamento della callback, salvataggio dati}
+\begin{enumerate}
+\setcounter{enumi}{6}
+ \item La callback \\ \texttt{void save(GtkApplication *, gpointer)} \\ sfortunatamente non è completa: manca la parte di salvataggio dei dati.
+ \item Si utilizzi \texttt{fprinf} per salvare tutti i dati contenuti nel \texttt{GArray filtered}. Per farlo, si scorra filtered e per ciascun punto in esso contenuto si stampi su file la coordinata x, uno spazio, la coordinata y, e un ``a capo''.
+ \item Come riferimento, si consideri che la funzione \\ \texttt{static void load(void)} \\ già implementata deve essere in grado di caricare correttamente i punti salvati salla \texttt{save}.
+ \item Si compili \texttt{FunctionDrawer.c} e si verifichi che il pulsante quando premuto ora apre una finestra di salvataggio, e che a fronte della selezione di un file esso viene riempito con i dati come atteso.
+ \item Si verifichi che il programma è in grado di caricare i punti salvati in precedenza.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Fine dei giochi}
+Al termine dei laboratori di questo corso dovreste essere in grado di:
+\begin{itemize}
+ \item Scrivere programmi giocattolo in Java
+ \item Scrivere semplici programmi in C
+ \item Scrivere nuove librerie C
+ \item Utilizzare librerie C scritte da altri
+ \item Realizzare programmi C con grafica e accesso al file system (conseguenza della precedente)
+ \item Last but not least, \textbf{passare l'esame}!
+ \item Chi ha trovato il corso interessante e volesse imparare a scrivere software ``sul serio'', ha le basi necessarie per affrontare il corso di Programmazione a Oggetti. Dovrebbe essere fra i vostri opzionali.
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
+
