@@ -9,3 +9,5 @@ syntax: glob
 *.vrb
 *.directory
 E7 - C/Slides/E7-C.pdf
+*.backup
+
