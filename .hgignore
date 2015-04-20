@@ -1,0 +1,11 @@
+syntax: glob
+
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.directory
+E7 - C/Slides/E7-C.pdf
