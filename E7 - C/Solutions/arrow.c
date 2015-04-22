@@ -20,7 +20,7 @@ void printArrow(int n){
   printf("0\n");
 }
 
-int main(){
+int main(void){
   printArrow(8);
 }
 

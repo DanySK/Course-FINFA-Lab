@@ -13,7 +13,7 @@ void printEmptyMatrix(int n) {
   printf("\n");
 }
 
-int main(){
+int main(void){
   printEmptyMatrix(30);
   return 0;
 }

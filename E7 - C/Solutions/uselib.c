@@ -1,6 +1,6 @@
 #include "functions.h"
 
-int main(){
+int main(void){
   printf("Testing minThree with {1, 2, 3}: %d\n", minThree(1,2,3));
   printf("Testing minThree with {1, 2, -3}: %d\n", minThree(1,2,-3));
   printf("Testing randInInterval(50,60): %d\n", randInInterval(50,60));

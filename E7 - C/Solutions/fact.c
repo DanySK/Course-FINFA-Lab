@@ -26,7 +26,7 @@ int test(void) {
     fact(20) == (MAX_VALUE == 12 ? 0l : 2432902008176640000l);
 }
 
-int main(){
+int main(void){
   printf("This executable has been compiled with a %lubit compiler, and MAX_VALUE is consequently %d\n", sizeof(unsigned long)*8, MAX_VALUE);
   if(test()){
     printf("OK\n");

@@ -24,7 +24,7 @@ int test(void) {
     mcm(66,21) == 462;
 }
 
-int main(){
+int main(void){
   if(test()){
     printf("OK\n");
   } else {
