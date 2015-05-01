@@ -7,24 +7,22 @@ void array_creator (int size, int **res) {
 }
 
 int main (void) {
-  int *array;
-  /*
-   * Passo il puntatore all'array (ossia un puntatore a puntatore)
-   */
-  array_creator(ARRAY_SIZE, &array);
-  int i;
-  for (i = 0; i < ARRAY_SIZE; i++) {
-     printf("%d ", array[i]);
-  }
-  printf("\n");
-  for (i = 0; i < ARRAY_SIZE; i++) {
-    if (array[i] != i) {
-      printf("Error at %d\n", i);
-      return 1;
+    int *array;
+    /*
+    * Passo il puntatore all'array (ossia un puntatore a puntatore)
+    */
+    array_creator(ARRAY_SIZE, &array);
+    int i;
+    for (i = 0; i < ARRAY_SIZE; i++) {
+        printf("%d ", array[i]);
     }
-  }
-  printf("All done, everything looks fine.\n");
-  return 0;
+    printf("\n");
+    for (i = 0; i < ARRAY_SIZE; i++) {
+        if (array[i] != i) {
+            printf("Error at %d\n", i);
+            return 1;
+        }
+    }
+    printf("All done, everything looks fine.\n");
+    return 0;
 }
-
-
