@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \title[Lab1 - FV]{Fondamenti di Informatica A \\ Laboratorio 9 \\ Strutture dati in C}
-\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
+\author[Danilo Pianini]{Danilo Pianini\\\texttt{danilo.pianini@unibo.it} \\ \vspace{3pt} Pietro Brunetti\\\texttt{p.brunetti@unibo.it} \\ \vspace{3pt} Mirko Viroli\\\texttt{mirko.viroli@unibo.it} }
 \institute[UNIBO]{\textsc{Alma Mater Studiorum}---Università di Bologna}
 \date[\today]{\today}
 
@@ -106,7 +106,7 @@ Data la libreria list fornita con i file \texttt{list.c} e \texttt{list.h}, defi
 \begin{frame}[fragile]
 \frametitle{Uso della libreria esportata}
 \begin{itemize}
- \item Stampare su console la rappresentazione delle due liste appena create utilizzando la funzione \texttt{char *list\_to\_string(List *)} che accetta in ingresso il puntatore a una lista e restituisce l'array di caratteri contenente la stringa rappresentante la lista. \item \textbf{SUGGERIMENTO}: per stampare la lista su console utilizzare la funzione \texttt{printf} e il parametro \texttt{\%s}, come visto più volte a lezione.
+ \item Stampare su console la rappresentazione delle due liste appena create utilizzando la funzione \texttt{char *list\_to\_string(List *)} che accetta in ingresso il puntatore a una lista e restituisce l'array di caratteri contenente la stringa rappresentante la lista. \item \textbf{SUGGERIMENTO}: per stampare la lista su console utilizzare la funzione \texttt{printf} e il formattatore \texttt{\%s}, come visto più volte a lezione.
  \item Stampare su console la dimensione delle due liste avvalendosi della funzione \texttt{int list\_length(List *)}.
  \item Ora "appendere" alla lista la la seconda lista lb: utilizzare la funzione \texttt{void list\_append\_to(List *,List *)} nel seguente modo: \texttt{list\_append\_to(la,lb)}. In coda alla lista \texttt{la} si troverà ora la lista \texttt{lb}: accertarsene stampando su console la stringa rappresentante la lista e la sua dimensione.
  \item Compilare ed eseguire.
@@ -136,9 +136,9 @@ Data la libreria list fornita con i file \texttt{list.c} e \texttt{list.h}, defi
 \frametitle{Conversione da stringhe a numeri}
 Gli argomenti passati sono sempre in formato stringa (char *). Così come Java, C mette a disposizione delle utility di libreria in \texttt{stdlib.h} per convertire tali stringhe in numeri (\texttt{int}, \texttt{long}, \texttt{double}) in modo da poterli usare internamente. Tali funzioni sono:
 \begin{enumerate}
- \item \texttt{int atoi (const char * str)} --- Converte in \texttt{int}
- \item \texttt{long int atol (const char * str)} --- Converte in \texttt{long}
- \item \texttt{double atof (const char* str)} --- Converte in \texttt{double}
+ \item \texttt{int atoi (char * str)} --- Converte in \texttt{int}
+ \item \texttt{long int atol (char * str)} --- Converte in \texttt{long}
+ \item \texttt{double atof (char* str)} --- Converte in \texttt{double}
 \end{enumerate}
 \begin{itemize}
  \item Si osservi il contenuto di \texttt{input.c}. Cosa realizza?
