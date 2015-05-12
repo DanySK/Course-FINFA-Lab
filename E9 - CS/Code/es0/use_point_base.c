@@ -17,8 +17,14 @@ int main(void) {
   p2 -> x = 3.7; // Equivalent to (*p2).x
   p2 -> y = 92.3;
   
+  /*
+   * struct on stack, accessed with pointer
+   */
+  struct Point2D *p3 = &p1;
+  
   printf("I can see a point in your stack: [%f, %f]\n", p1.x, p1.y);
   printf("And I can see another in your heap: [%f, %f]\n", p2 -> x, p2 -> y);
+  printf("You can also point to variables on your stack: [%f, %f]\n", p3 -> x, p3 -> y);
   
   return 0;
 }
