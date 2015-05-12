@@ -103,6 +103,11 @@ Data la libreria list fornita con i file \texttt{list.c} e \texttt{list.h}, defi
  \item Assegnare il puntatore a una variabile di tipo \texttt{List *};
 \end{enumerate}
  \item Creare ora una lista (50,60), questa volta utilizzando la funzione \texttt{List *list\_cons(int, List *)}, funzione che rappresenta il costruttore di una lista e che accetta in ingresso un intero e un puntatore ad una lista.
+ \begin{itemize}
+  \item Si ricorda che il secondo argomento della \texttt{list\_cons} è una lista, che può essere a sua volta costruita con \texttt{list\_cons}.
+  \item Ad esempio, la lista (1) può essere costruita come: \texttt{list\_cons(1, list\_nil())}
+ \end{itemize}
+
 \end{itemize}
 \end{frame}
 
@@ -121,6 +126,10 @@ Data la libreria list fornita con i file \texttt{list.c} e \texttt{list.h}, defi
 \frametitle{Uso della libreria esportata}
 \begin{itemize}
  \item Si crei la funzione \texttt{void list\_cut\_zero(List *)} che, data una lista, la taglia al primo zero che incontra.
+  \begin{itemize}
+    \item Suggerimento: si osservi list.c per capire come scorrere la lista
+    \item Per tagliare una lista, è sufficiente settare la sua coda a \texttt{list\_nil()}
+  \end{itemize}
  \item Si testi tale funzione nel \texttt{main}.
 \end{itemize}
 \end{frame}
