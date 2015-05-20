@@ -92,11 +92,9 @@ void free_list(List *l) {
 }
 
 void list_cut_zero(List *l) {
-    for(; l != NULL && l -> head != 0; l = l -> tail);
-    if(l != NULL) {
-        free_list(l -> tail);
-    }
-    l -> tail = list_nil();
+    /*
+     * You must implement it
+     */
 }
 
 
