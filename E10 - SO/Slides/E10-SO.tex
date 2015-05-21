@@ -21,13 +21,20 @@
 
 \frame{\titlepage} 
 
+\newcommand{\vmfolder}{\texttt{C:\textbackslash{}VM\textbackslash{}Courses\textbackslash{}}}
+
 \begin{frame}[fragile]
 \frametitle{Operazioni preliminari}
 \begin{itemize}
- \item \textbf{AVVISO:} per chi volesse sperimentare con i device file ed i comandi in stile Unix presentati a lezione, può fare boot sulla \textbf{macchina fisica}, dove è disponibile una macchina virtuale Linux installata in \texttt{D:\textbackslash{}finfa}
- \item La stessa macchina sarà utilizzata per l'ultimo laboratorio
- \item Slides: \url{http://bit.ly/finfa2013-e10}
- \item Codice: \url{http://bit.ly/finfa2013-e10-code}
+ \item Testo dell'esercitazione: \url{http://campus.unibo.it/190502/}
+ \item \textbf{AVVISO:} per chi volesse sperimentare con i device file ed i comandi in stile Unix presentati a lezione, ha a disposizione una macchina virtuale Linux installata in \vmfolder{}
+ \begin{enumerate}
+  \item Raggiungere la cartella \vmfolder{}
+  \item Doppio click sul file \texttt{Courses.vbox} (icona blu)
+  \item Si aprirà la finestra del gestore di macchine virtuali VirtualBox. Premere il tasto ``Avvia''
+  \item Attendere l'avvio della macchina
+ \end{enumerate}
+ \item La stessa macchina sarà utilizzata per il prossimo laboratorio
 \end{itemize}
 \end{frame}
 
@@ -46,15 +53,30 @@ Conoscere il linguaggio assembly non fa parte delle competenze che dovete acquis
 
 \begin{frame}[fragile]{Esempio di accesso al file system: \texttt{cat}}
 \begin{itemize}
- \item Si osservi il contenuto di \texttt{cat.c}. Cosa realizza?
- \item Una volta compreso il funzionamento, si compili e si esegua, ad esempio con \\ \texttt{./cat cat.c filter.c}
+ \item Si osservi il contenuto di \texttt{cat\_simple.c}. Cosa realizza?
+ \item Una volta compreso il funzionamento, si compili e si esegua, ad esempio con \\ \texttt{./cat\_simple cat.c filter.c}
+ \item Si osservi ora \texttt{cat.c}. In che modo differisce da \texttt{cat\_simple.c}?
+ \item Calcolare dinamicamente la dimensione del buffer da allocare ha vantaggi e svantaggi:
+ \begin{itemize}
+  \item Evita di sprecare memoria
+  \item Consente di risolvere il problema di apertura di files più grandi del buffer predefinito senza la necessità fare multipli ``giri'' di lettura, risultando potenzialmente più veloce
+  \item Nel caso in cui un solo ``giro'' sia sufficiente a riempire il buffer statico, è potenzialmente più lento per via della \texttt{seek} / \texttt{rewind}
+  \item Rende il codice un po' più lungo
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Esempio di accesso al file system: \texttt{cat}}
+\begin{itemize}
  \item Si modifichi cat.c perché sia in grado di funzionare con più di un file in input, ossia: \\ \texttt{./cat file1 file2 file3} \\ restituisce in output \\ \texttt{<contenuto di file1> \\ <contenuto di file2> \\ <contenuto di file3>}
  \item \textbf{SUGGERIMENTI:}
  \begin{enumerate}
  \scriptsize
-  \item si crei una nuova funzione \\ \texttt{void printFile(char *)} \\ che, dato una stringa rappresentante il path di un file, lo stampa a schermo. Si noti che questa funzionalità è già offerta da \texttt{cat.c} all'interno del \texttt{main}.
+  \item Si crei una nuova funzione \texttt{void printFile(char *)} che, dato una stringa rappresentante il path di un file, lo stampa a schermo. Si noti che questa funzionalità è già offerta da \texttt{cat.c} all'interno del \texttt{main}, per cui sarà sufficiente spostare le linee di codice che vanno dall'apertura del file (linea 33) alla sua chiusura (linea 55) dentro la nuova funzione, avendo cura di cambiare il primo parametro della \texttt{fopen} opportunamente.
  \scriptsize
-  \item A questo punto, si chiami la funzione per ogni argomento passato, costruendo un ciclo \texttt{for} che scorre \texttt{argv} dal secondo elemento in poi e richiami la funzione costruita sopra.
+  \item Si testi la funzione chiamandola passando \texttt{argv[1]}: dovrebbe riprodurre il comportamento originale di \texttt{cat.c}.
+ \scriptsize
+  \item A questo punto, si aggiunga un ciclo \texttt{for} che scorra \texttt{argv} dal secondo elemento in poi e richiami al suo interno la funzione costruita sopra.
  \scriptsize
   \item Si elimini il messaggio di warning riguardante i parametri in eccesso.
  \end{enumerate}

@@ -1,20 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * This function computes the size of a file. The strategy is:
- * 1) Go to the end of the file
- * 2) See how many bytes have been read
- * 3) Go to the start of the file, so the file is ready for others
- * 4) Return the number of read bytes
- */
-unsigned long compute_size(FILE *file) {
-   // to obtain file size:
-   fseek(file , 0 , SEEK_END); // go to the end
-   unsigned long lSize = ftell(file); // see where you are
-   rewind(file); // go back
-   return lSize;
-}
+#define BUFFER_SIZE 10000
 
 int main(int argc, char **argv) {
    if(argc < 2) {
@@ -38,16 +25,14 @@ int main(int argc, char **argv) {
       return 2;
    }
    
-   unsigned long lSize = compute_size(file);
-   
    // Build a buffer to store the file
-   char *buffer = (char *) malloc(lSize * sizeof(char));
+   char *buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
    
    // Read the file into the buffer
-   fread(buffer, 1, lSize, file);
-   
+   fread(buffer, 1, BUFFER_SIZE, file);
+
    int i;
-   for(i = 0; i < lSize; i++) {
+   for(i = 0; i < BUFFER_SIZE; i++) {
       printf("%c", buffer[i]);
    }
       
