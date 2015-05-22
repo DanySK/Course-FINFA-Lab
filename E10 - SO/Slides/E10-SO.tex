@@ -83,6 +83,16 @@ Conoscere il linguaggio assembly non fa parte delle competenze che dovete acquis
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Pipe}
+Pipe (simbolo \texttt{|}), come redirect (simboli \texttt{<}\texttt{<}, \texttt{<}, \texttt{>}\texttt{>}, \texttt{>}), è uno strumento che il terminale vi mette a disposizione per modificare da dove il vostro programma prende l'input e dove deve direzionare l'output.
+\begin{itemize}
+ \item Pipe si utilizza per ``concatenare'' più programmi
+ \item Lo standard output del programma alla sinistra della pipe viene messo in ingresso allo standard input del programma alla destra della pipe
+ \item Qualunque cosa inviata allo standard output dal primo programma (ad esempio perché usa \texttt{printf}) sarà messa in ingresso allo standard input del secondo, che potrà accedervi, ad esempio, usando \texttt{gets}.
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}[fragile]{Filtro input-output, pipe, redirect}
 \begin{itemize}
  \item Si osservi il contenuto di \emph{filter.c}. Cosa realizza?
