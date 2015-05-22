@@ -29,10 +29,10 @@ int main(int argc, char **argv) {
    char *buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
    
    // Read the file into the buffer
-   fread(buffer, 1, BUFFER_SIZE, file);
+   unsigned int numRead = fread(buffer, 1, BUFFER_SIZE, file);
 
    int i;
-   for(i = 0; i < BUFFER_SIZE; i++) {
+   for(i = 0; i < numRead; i++) {
       printf("%c", buffer[i]);
    }
       
