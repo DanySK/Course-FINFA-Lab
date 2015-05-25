@@ -13,6 +13,7 @@ void prt(GSList* a) {
 int main(int argc, char** argv) {
   GSList* list = NULL;
   printf("The list is : ");
+  prt(list);
   list = g_slist_append(list, "two");
   list = g_slist_prepend(list, "one");
   printf("Adding some strings: ");
